@@ -1,4 +1,5 @@
 import psycopg2
+from string import ascii_lowercase
 
 
 # from typing import
@@ -37,7 +38,9 @@ class Table:
         self.cursor = self.connection.cursor
 
     def create(self):
-        
+        fields = ""
+        for field in self.fields:
+
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS '%s' ()""")
 
     def close(self):
