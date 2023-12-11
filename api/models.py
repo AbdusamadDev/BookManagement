@@ -62,15 +62,14 @@ class Table:
                 raise NameError(f"Too long field name: {key[:20]}...")
             if not isinstance(key, str) or not isinstance(value, str):
                 raise AttributeError("Fields can only be str!")
-            fields += f"{key.lower()}, {value.upper()},"
+            fields += f"{key.lower()} {value.upper()},"
         self.cursor.execute(
-            """CREATE TABLE IF NOT EXISTS %s (%s)""" % (self.name, fields)
+            """CREATE TABLE IF NOT EXISTS %s (%s)""" % (self.name, fields[:-1])
         )
         self.conn.commit()
-        self.conn.close()
 
     def delete(self, name):
-        query = f"SELECT {name} FROM information_schema.tables WHERE table_schema = 'public'"
+        query = f"SELECT '{name}' FROM information_schema.tables WHERE table_schema = 'public'"
         result_list = self.cursor.execute(query)
         print(result_list)
 
@@ -78,3 +77,4 @@ class Table:
 if __name__ == "__main__":
     database = Table(name="new_table", fields={"name": "Text", "age": "Integer"})
     database.create()
+    database.delete("new_table")
