@@ -38,7 +38,7 @@ class Table:
         self.name = name
         self.fields = fields
         self.connection = Connection()
-        selfconn 
+        self.conn = self.connection.connection
         self.cursor = self.connection.cursor
 
     def create(self):
@@ -49,7 +49,7 @@ class Table:
             if value not in self.DATATYPES:
                 raise TypeError(f"Datatype: {value} not valid for field: {key}")
             if 0 >= len(key) >= 200:
-                raise NameError("Too long field name!")
+                raise NameError(f"Too long field name: {key[:20]}...")
             if not isinstance(key, str) or not isinstance(value, str):
                 raise AttributeError("Fields can only be str!")
             fields += f"{key.lower()}, {value.upper()}"
@@ -57,8 +57,7 @@ class Table:
             """CREATE TABLE IF NOT EXISTS '%s' (%s);""" % (self.name, fields)
         )
         self.conn.commit()
+        self.conn.close()
 
-    def close(self):
-        pass
-
-    # def create(self, )
+    def delete(self, name):
+        
