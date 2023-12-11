@@ -73,6 +73,10 @@ class Database:
     def add(self, **kwargs):
         if self.name is None:
             raise TypeError("name parameter is not provided")
+        def validate_fields():
+            key = kwargs.pop()
+            if key not in self.columns:
+                raise 
         fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
         values = str(list(kwargs.values()))[1:-1]
         self.cursor.execute(f"""INSERT INTO {self.name} ({fields}) VALUES ({values})""")
@@ -82,8 +86,9 @@ class Database:
         self.conn.commit()
 
     @property
-    def fields(self) -> List:
-        
+    def columns(self) -> List:
+        if self.name is None:
+            raise TypeError("name parameter is not provided")
         self.cursor.execute(
             f"""
             SELECT * FROM INFORMATION_SCHEMA.COLUMNS
@@ -97,4 +102,4 @@ if __name__ == "__main__":
     database = Database(name="new_table", fields={"name": "Text", "age": "Integer"})
     database.createdb()
     database.add(name="Abdusamad", age=18)
-    database.info()
+    print(database.columns)
