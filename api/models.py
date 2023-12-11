@@ -13,9 +13,6 @@ class Connection:
         self.user = user
         self.password = password
 
-    def create_table(table):
-
-
 
 class Table:
     def __init__(self, name, **fields) -> None:
@@ -26,7 +23,7 @@ class Table:
     def create(self):
         pass
 
-    de
-
+    def close(self):
+        pass
 
     # def create(self, )
