@@ -2,9 +2,6 @@ import psycopg2
 import re
 import os
 
-try:
-    credentials = os.getenv("../.env")
-except Os
 
 class Connection:
     def __init__(
@@ -36,9 +33,12 @@ class Table:
     DATATYPES = ["TEXT", "INTEGER", "JSON"]
 
     def __init__(self, name, **fields) -> None:
+        credentials = os.environ.get("")
         self.name = name
         self.fields = fields
-        self.connection = Connection()
+        self.connection = Connection(
+            database=credentials.
+        )
         self.conn = self.connection.connection
         self.cursor = self.connection.cursor
 
