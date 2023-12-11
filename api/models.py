@@ -14,6 +14,15 @@ class Connection:
         self.user = user
         self.password = password
 
+    def connect(self):
+        psycopg2.connect(
+            user=self.user,
+            database=self.database,
+            host=self.host,
+            port=self.port,
+            password=self.password,
+        )
+
 
 class Table:
     def __init__(self, name, **fields) -> None:
@@ -24,7 +33,7 @@ class Table:
 
     def create(self):
         pass
- 
+
     def close(self):
         pass
 
