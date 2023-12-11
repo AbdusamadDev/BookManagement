@@ -14,7 +14,7 @@ class Connection:
         self.port = port
         self.user = user
         self.password = password
-        self.connection = psycopg2.connect(
+        self.cn = psycopg2.connect(
             user=self.user,
             database=self.database,
             host=self.host,
@@ -24,8 +24,11 @@ class Connection:
 
     @property
     def cursor(self):
-        connection = self.connect()
-        return connection.cursor()
+        return self.cn.cursor()
+
+    @property
+    def connection(self):
+        return self.cn
 
 
 class Table:
@@ -35,6 +38,7 @@ class Table:
         self.name = name
         self.fields = fields
         self.connection = Connection()
+        selfconn 
         self.cursor = self.connection.cursor
 
     def create(self):
@@ -52,7 +56,7 @@ class Table:
         self.cursor.execute(
             """CREATE TABLE IF NOT EXISTS '%s' (%s);""" % (self.name, fields)
         )
-        self.connection.commit()
+        self.conn.commit()
 
     def close(self):
         pass
