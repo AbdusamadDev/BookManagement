@@ -53,20 +53,21 @@ class Table:
     def create(self):
         fields = ""
         for key, value in self.fields.items():
-            if not re.match(r"^[a-zA-Z]+$", key):
-                raise TypeError(f"Field name is not valid: {key}")
-            if value not in self.DATATYPES:
-                raise TypeError(f"Datatype: {value} not valid for field: {key}")
-            if 0 >= len(key) >= 200:
-                raise NameError(f"Too long field name: {key[:20]}...")
-            if not isinstance(key, str) or not isinstance(value, str):
-                raise AttributeError("Fields can only be str!")
-            fields += f"{key.lower()}, {value.upper()}"
-        self.cursor.execute(
-            """CREATE TABLE IF NOT EXISTS '%s' (%s);""" % (self.name, fields)
-        )
-        self.conn.commit()
-        self.conn.close()
+            print(key, value)
+        #     if not re.match(r"^[a-zA-Z]+$", key):
+        #         raise TypeError(f"Field name is not valid: {key}")
+        #     if value not in self.DATATYPES:
+        #         raise TypeError(f"Datatype: {value} not valid for field: {key}")
+        #     if 0 >= len(key) >= 200:
+        #         raise NameError(f"Too long field name: {key[:20]}...")
+        #     if not isinstance(key, str) or not isinstance(value, str):
+        #         raise AttributeError("Fields can only be str!")
+        #     fields += f"{key.lower()}, {value.upper()}"
+        # self.cursor.execute(
+        #     """CREATE TABLE IF NOT EXISTS '%s' (%s);""" % (self.name, fields)
+        # )
+        # self.conn.commit()
+        # self.conn.close()
 
     def delete(self, name):
         query = f"SELECT {name} FROM information_schema.tables WHERE table_schema = 'public'"
@@ -76,3 +77,4 @@ class Table:
 
 if __name__ == "__main__":
     database = Table("new_table", kwargs={"name": "TExt", "age": "Integer"})
+    database.create()
