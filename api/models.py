@@ -74,14 +74,25 @@ class Database:
         if self.name is None:
             raise TypeError("name parameter is not provided")
         fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
-        values = str(list(kwargs.values()))[1:-1].replace('"', "").replace("'", "")
+        values = str(list(kwargs.values()))[1:-1]
         self.cursor.execute(f"""INSERT INTO {self.name} ({fields}) VALUES ({values})""")
         self.commit()
 
     def commit(self):
         self.conn.commit()
 
+    def info(self):
+        self.cursor.execute(
+            """
+            SELECT * FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME = N'new_table'
+            """
+        )
+        print(self.cursor.fetchall())
+
 
 if __name__ == "__main__":
     database = Database(name="new_table", fields={"name": "Text", "age": "Integer"})
     database.createdb()
+    database.create(name="Abdusamad", age=18)
+    database.info()
