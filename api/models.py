@@ -34,10 +34,10 @@ class Connection:
         return self.cn
 
 
-class Table:
+class Database:
     DATATYPES = ["TEXT", "INTEGER", "JSON"]
 
-    def __init__(self, name, fields: Dict) -> None:
+    def __init__(self, name=None, fields: Dict = None) -> None:
         dbname = os.environ.get("DATABASE")
         user = os.environ.get("USER")
         password = os.environ.get("PASSWORD")
@@ -51,8 +51,10 @@ class Table:
         self.conn = self.connection.connection
         self.cursor = self.connection.cursor
 
-    def create(self):
+    def createdb(self):
         fields = ""
+        if self.name and fields is None:
+            raise TypeError("name or fields attributes are not given")
         for key, value in self.fields.items():
             if not re.match(r"^[a-zA-Z]+$", key):
                 raise TypeError(f"Field name is not valid: {key}")
@@ -68,13 +70,10 @@ class Table:
         )
         self.conn.commit()
 
-    def delete(self, name):
-        query = f"SELECT '{name}' FROM information_schema.tables WHERE table_schema = 'public'"
-        result_list = self.cursor.execute(query)
-        print(result_list)
-
+    def create(self, **kwargs):
+        if 
+        self.cursor.execute("""INSERT INTO """)
 
 if __name__ == "__main__":
-    database = Table(name="new_table", fields={"name": "Text", "age": "Integer"})
-    database.create()
-    database.delete("new_table")
+    database = Database(name="new_table", fields={"name": "Text", "age": "Integer"})
+    database.createdb()
