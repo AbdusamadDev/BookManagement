@@ -1,8 +1,8 @@
+from dotenv import load_dotenv
+from typing import Dict, List
 import psycopg2
 import re
-from typing import Dict
 import os
-from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), "../.env")
 load_dotenv(dotenv_path)
@@ -70,7 +70,7 @@ class Database:
         )
         self.commit()
 
-    def create(self, **kwargs):
+    def add(self, **kwargs):
         if self.name is None:
             raise TypeError("name parameter is not provided")
         fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
@@ -81,18 +81,20 @@ class Database:
     def commit(self):
         self.conn.commit()
 
-    def info(self):
+    @property
+    def fields(self) -> List:
+        
         self.cursor.execute(
-            """
+            f"""
             SELECT * FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_NAME = N'new_table'
+            WHERE TABLE_NAME = N'{self.name}'
             """
         )
-        print(self.cursor.fetchall())
+        return [i[3] for i in self.cursor.fetchall()]
 
 
 if __name__ == "__main__":
     database = Database(name="new_table", fields={"name": "Text", "age": "Integer"})
     database.createdb()
-    database.create(name="Abdusamad", age=18)
+    database.add(name="Abdusamad", age=18)
     database.info()
