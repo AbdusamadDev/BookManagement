@@ -7,5 +7,5 @@ while True:
     os.system('git commit -m "CLI Commit"')
     count += 1
     os.system("git push -u origin main")
-    time.sleep(60 * 2)
+    time.sleep(60 * 5)
 
