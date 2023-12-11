@@ -60,7 +60,7 @@ class Database:
         for key, value in self.fields.items():
             if not re.match(r"^[a-zA-Z]+$", key):
                 raise TypeError(f"Field name is not valid: {key}")
-            if value.upper() not in self.DATATYPES:
+            if value.upper().split(" ")[0] not in self.DATATYPES:
                 raise TypeError(f"Datatype: {value} not valid for field: {key}")
             if 0 >= len(key) >= 200:
                 raise NameError(f"Too long field name: {key[:20]}...")
@@ -117,7 +117,7 @@ class Database:
 
 
 if __name__ == "__main__":
-    database = Database(name="new_table", fields={"name": "Text", "age": "Integer"})
+    database = Database(name="new_table", fields={"name": "Text NOT NULL", "age": "Integer"})
     database.createdb()
     database.add(name="Abdusamad", age=18)
     print(database.columns)
