@@ -44,6 +44,7 @@ class Table:
         port = os.environ.get("PORT")
         self.name = name
         self.fields = fields
+        print(self.fields)
         self.connection = Connection(
             database=dbname, user=user, host=host, password=password, port=port
         )
@@ -76,5 +77,5 @@ class Table:
 
 
 if __name__ == "__main__":
-    database = Table("new_table", kwargs={"name": "TExt", "age": "Integer"})
+    database = Table(name="new_table", kwargs={"name": "TExt", "age": "Integer"})
     database.create()
