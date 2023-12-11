@@ -15,21 +15,26 @@ class Connection:
         self.password = password
 
     def connect(self):
-        psycopg2.connect(
+        connection = psycopg2.connect(
             user=self.user,
             database=self.database,
             host=self.host,
             port=self.port,
             password=self.password,
         )
+        return connection
 
+    @property
+    def cursor(self):
+        connection = self.connect()
+        return connection.cursor()
 
 class Table:
     def __init__(self, name, **fields) -> None:
         self.name = name
         self.fields = fields
         self.connection = Connection()
-        self.connection.connect()
+        self.cursor = self.connection.cursor
 
     def create(self):
         pass
