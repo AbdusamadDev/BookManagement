@@ -68,11 +68,19 @@ class Database:
         self.cursor.execute(
             """CREATE TABLE IF NOT EXISTS %s (%s)""" % (self.name, fields[:-1])
         )
-        self.conn.commit()
+        self.commit()
 
     def create(self, **kwargs):
-        if 
-        self.cursor.execute("""INSERT INTO """)
+        if self.name is None:
+            raise TypeError("name parameter is not provided")
+        fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
+        values = str(list(kwargs.values()))[1:-1].replace('"', "").replace("'", "")
+        self.cursor.execute(f"""INSERT INTO {self.name} ({fields}) VALUES ({values})""")
+        self.commit()
+
+    def commit(self):
+        self.conn.commit()
+
 
 if __name__ == "__main__":
     database = Database(name="new_table", fields={"name": "Text", "age": "Integer"})
