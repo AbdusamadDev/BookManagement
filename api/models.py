@@ -37,7 +37,8 @@ class Table:
         self.cursor = self.connection.cursor
 
     def create(self):
-        pass
+        
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS '%s' ()""")
 
     def close(self):
         pass
