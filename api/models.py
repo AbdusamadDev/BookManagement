@@ -48,7 +48,9 @@ class Table:
                 raise TypeError(f"Datatype: {value} not valid for field: {key}")
             if 0 >= len(key) >= 200:
                 raise NameError("Too long field name!")
-            fields += 
+            if not isinstance(key, str) or not isinstance(value, str):
+                raise AttributeError("Fields can only be str!")
+            fields += f"{key.lower()}, {value.upper()}"
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS '%s' ()""")
 
     def close(self):
