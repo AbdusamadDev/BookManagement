@@ -1,3 +1,4 @@
+from psycopg2 import OperationalError
 from dotenv import load_dotenv
 from typing import Dict, List
 import psycopg2
@@ -72,10 +73,11 @@ class Database:
         self.commit()
 
     def add(self, **kwargs):
-        start = time.time()
         if self.name is None:
             raise TypeError("name parameter is not provided")
         keys = list(kwargs.keys())
+
+        # Performed recursion here to show more skills
         def validate_fields(index):
             try:
                 key = keys[index]
@@ -85,15 +87,18 @@ class Database:
                     raise Exception(f"Invalid column name: {key}")
             except IndexError:
                 return None
-            return validate_fields(index+1)
+            return validate_fields(index + 1)
+
         validate_fields(0)
         fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
         values = str(list(kwargs.values()))[1:-1]
-        self.cursor.execute(f"""INSERT INTO {self.name} ({fields}) VALUES ({values})""")
-        self.commit()
-        end = time.time()
-        print(end - start)
-
+        try:
+            self.cursor.execute(
+                f"""INSERT INTO {self.name} ({fields}) VALUES ({values})"""
+            )
+            self.commit()
+        except OperationalError as err:
+            raise Exception("Database error: ", str(err))
 
     def commit(self):
         self.conn.commit()
