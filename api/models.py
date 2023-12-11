@@ -76,15 +76,17 @@ class Database:
         if self.name is None:
             raise TypeError("name parameter is not provided")
         keys = list(kwargs.keys())
-        def validate_fields():
-            index = 0
-            key = keys[index]
-            print(key)
-            index += 1
-            if key not in self.columns:
-                raise Exception(f"Invalid column name: {key}")
-            return validate_fields()
-        validate_fields()
+        def validate_fields(index):
+            try:
+                key = keys[index]
+                print(key)
+                index += 1
+                if key not in self.columns:
+                    raise Exception(f"Invalid column name: {key}")
+            except IndexError:
+                return None
+            return validate_fields(index+1)
+        validate_fields(0)
         fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
         values = str(list(kwargs.values()))[1:-1]
         self.cursor.execute(f"""INSERT INTO {self.name} ({fields}) VALUES ({values})""")
