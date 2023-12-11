@@ -60,5 +60,9 @@ class Table:
         self.conn.close()
 
     def delete(self, name):
-        query = "SELECT {} FROM information_schema.tables WHERE  = 'public'"
+        query = f"SELECT {name} FROM information_schema.tables WHERE table_schema = 'public'"
+        result_list = self.cursor.execute(query)
+        print(result_list)
 
+if __name__ == "__main__":
+    database = Table("new_table", "")
