@@ -39,8 +39,10 @@ class Table:
 
     def create(self):
         fields = ""
-        for field in self.fields:
-            
+        for key, value in self.fields.items():
+            if re.match(r'^[a-zA-Z]+$', key):
+                return input_string  # String contains only letters, return it
+            else:
 
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS '%s' ()""")
 
