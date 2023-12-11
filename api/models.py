@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from typing import Dict, List
 import psycopg2
+import time
 import re
 import os
 
@@ -71,16 +72,22 @@ class Database:
         self.commit()
 
     def add(self, **kwargs):
+        start = time.time()
         if self.name is None:
             raise TypeError("name parameter is not provided")
+        columns = kwargs
         def validate_fields():
             key = kwargs.pop()
             if key not in self.columns:
-                raise 
-        fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
-        values = str(list(kwargs.values()))[1:-1]
+                raise Exception(f"Invalid column name: {key}")
+            return validate_fields()
+        fields = str(list(columns.keys()))[1:-1].replace('"', "").replace("'", "")
+        values = str(list(columns.values()))[1:-1]
         self.cursor.execute(f"""INSERT INTO {self.name} ({fields}) VALUES ({values})""")
         self.commit()
+        end = time.time()
+        print(end - start)
+
 
     def commit(self):
         self.conn.commit()
@@ -101,5 +108,5 @@ class Database:
 if __name__ == "__main__":
     database = Database(name="new_table", fields={"name": "Text", "age": "Integer"})
     database.createdb()
-    database.add(name="Abdusamad", age=18)
+    database.add(name="Abdusamad", agess=18)
     print(database.columns)
