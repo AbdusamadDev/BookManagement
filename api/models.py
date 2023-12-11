@@ -67,10 +67,13 @@ class Database:
             if not isinstance(key, str) or not isinstance(value, str):
                 raise AttributeError("Fields can only be str!")
             fields += f"{key.lower()} {value.upper()},"
-        self.cursor.execute(
-            """CREATE TABLE IF NOT EXISTS %s (%s)""" % (self.name, fields[:-1])
-        )
-        self.commit()
+        try:
+            self.cursor.execute(
+                """CREATE TABLE IF NOT EXISTS %s (%s)""" % (self.name, fields[:-1])
+            )
+            self.commit()
+        except OperationalError as err:
+            raise TypeError("Database error: ", str(err))
 
     def add(self, **kwargs):
         if self.name is None:
@@ -81,7 +84,6 @@ class Database:
         def validate_fields(index):
             try:
                 key = keys[index]
-                print(key)
                 index += 1
                 if key not in self.columns:
                     raise Exception(f"Invalid column name: {key}")
@@ -117,7 +119,8 @@ class Database:
 
 
 if __name__ == "__main__":
-    database = Database(name="new_table", fields={"name": "Text NOT NULL", "age": "Integer"})
+    database = Database(
+        name="another table", fields={"name": "Text NOT NULL", "age": "Integer"}
+    )
     database.createdb()
     database.add(name="Abdusamad", age=18)
-    print(database.columns)
