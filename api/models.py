@@ -1,9 +1,10 @@
 import psycopg2
-from string import ascii_lowercase
 import re
+import os
 
-# from typing import
-
+try:
+    credentials = os.getenv("../.env")
+except Os
 
 class Connection:
     def __init__(
@@ -63,6 +64,7 @@ class Table:
         query = f"SELECT {name} FROM information_schema.tables WHERE table_schema = 'public'"
         result_list = self.cursor.execute(query)
         print(result_list)
+
 
 if __name__ == "__main__":
     database = Table("new_table", "")
