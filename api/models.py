@@ -38,10 +38,10 @@ class Table:
 
     def __init__(self, name, **fields) -> None:
         dbname = os.environ.get("DATABASE")
-        user = os.environ.get("DATABASE")
-        password = os.environ.get("DATABASE")
-        host = os.environ.get("DATABASE")
-        port = os.environ.get("DATABASE")
+        user = os.environ.get("USER")
+        password = os.environ.get("PASSWORD")
+        host = os.environ.get("HOST")
+        port = os.environ.get("PORT")
         self.name = name
         self.fields = fields
         self.connection = Connection(
