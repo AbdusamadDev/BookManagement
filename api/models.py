@@ -1,5 +1,6 @@
 import psycopg2
 import re
+from typing import Dict
 import os
 from dotenv import load_dotenv
 
@@ -36,7 +37,7 @@ class Connection:
 class Table:
     DATATYPES = ["TEXT", "INTEGER", "JSON"]
 
-    def __init__(self, name, **fields) -> None:
+    def __init__(self, name, fields: Dict) -> None:
         dbname = os.environ.get("DATABASE")
         user = os.environ.get("USER")
         password = os.environ.get("PASSWORD")
@@ -44,7 +45,6 @@ class Table:
         port = os.environ.get("PORT")
         self.name = name
         self.fields = fields
-        print(self.fields)
         self.connection = Connection(
             database=dbname, user=user, host=host, password=password, port=port
         )
@@ -54,21 +54,20 @@ class Table:
     def create(self):
         fields = ""
         for key, value in self.fields.items():
-            print(key, value)
-        #     if not re.match(r"^[a-zA-Z]+$", key):
-        #         raise TypeError(f"Field name is not valid: {key}")
-        #     if value not in self.DATATYPES:
-        #         raise TypeError(f"Datatype: {value} not valid for field: {key}")
-        #     if 0 >= len(key) >= 200:
-        #         raise NameError(f"Too long field name: {key[:20]}...")
-        #     if not isinstance(key, str) or not isinstance(value, str):
-        #         raise AttributeError("Fields can only be str!")
-        #     fields += f"{key.lower()}, {value.upper()}"
-        # self.cursor.execute(
-        #     """CREATE TABLE IF NOT EXISTS '%s' (%s);""" % (self.name, fields)
-        # )
-        # self.conn.commit()
-        # self.conn.close()
+            if not re.match(r"^[a-zA-Z]+$", key):
+                raise TypeError(f"Field name is not valid: {key}")
+            if value.upper() not in self.DATATYPES:
+                raise TypeError(f"Datatype: {value} not valid for field: {key}")
+            if 0 >= len(key) >= 200:
+                raise NameError(f"Too long field name: {key[:20]}...")
+            if not isinstance(key, str) or not isinstance(value, str):
+                raise AttributeError("Fields can only be str!")
+            fields += f"{key.lower()}, {value.upper()},"
+        self.cursor.execute(
+            """CREATE TABLE IF NOT EXISTS %s (%s)""" % (self.name, fields)
+        )
+        self.conn.commit()
+        self.conn.close()
 
     def delete(self, name):
         query = f"SELECT {name} FROM information_schema.tables WHERE table_schema = 'public'"
@@ -77,5 +76,5 @@ class Table:
 
 
 if __name__ == "__main__":
-    database = Table(name="new_table", kwargs={"name": "TExt", "age": "Integer"})
+    database = Table(name="new_table", fields={"name": "Text", "age": "Integer"})
     database.create()
