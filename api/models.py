@@ -1,6 +1,10 @@
 import psycopg2
 import re
 import os
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '../.env')
+load_dotenv(dotenv_path)
 
 
 class Connection:
@@ -33,11 +37,11 @@ class Table:
     DATATYPES = ["TEXT", "INTEGER", "JSON"]
 
     def __init__(self, name, **fields) -> None:
-        credentials = os.environ.get("")
+        dbname = os.environ.get("")
         self.name = name
         self.fields = fields
         self.connection = Connection(
-            database=credentials.
+            database=credentials
         )
         self.conn = self.connection.connection
         self.cursor = self.connection.cursor
