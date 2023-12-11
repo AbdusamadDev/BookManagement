@@ -3,7 +3,7 @@ import re
 import os
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '../.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), "../.env")
 load_dotenv(dotenv_path)
 
 
@@ -37,11 +37,15 @@ class Table:
     DATATYPES = ["TEXT", "INTEGER", "JSON"]
 
     def __init__(self, name, **fields) -> None:
-        dbname = os.environ.get("")
+        dbname = os.environ.get("DATABASE")
+        user = os.environ.get("DATABASE")
+        password = os.environ.get("DATABASE")
+        host = os.environ.get("DATABASE")
+        port = os.environ.get("DATABASE")
         self.name = name
         self.fields = fields
         self.connection = Connection(
-            database=credentials
+            database=dbname, user=user, host=host, password=password, port=port
         )
         self.conn = self.connection.connection
         self.cursor = self.connection.cursor
@@ -71,4 +75,4 @@ class Table:
 
 
 if __name__ == "__main__":
-    database = Table("new_table", "")
+    database = Table("new_table", kwargs={"name": "TExt", "age": "Integer"})
