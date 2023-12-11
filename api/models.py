@@ -60,4 +60,5 @@ class Table:
         self.conn.close()
 
     def delete(self, name):
-        
+        query = "SELECT {} FROM information_schema.tables WHERE  = 'public'"
+
