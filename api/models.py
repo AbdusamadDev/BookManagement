@@ -1,6 +1,6 @@
 import psycopg2
 from string import ascii_lowercase
-
+import re
 
 # from typing import
 
@@ -40,6 +40,7 @@ class Table:
     def create(self):
         fields = ""
         for field in self.fields:
+            
 
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS '%s' ()""")
 
