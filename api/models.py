@@ -19,10 +19,11 @@ class Table:
         self.name = name
         self.fields = fields
         self.connection = Connection()
+        self.connection.connect()
 
     def create(self):
         pass
-
+ 
     def close(self):
         pass
 
