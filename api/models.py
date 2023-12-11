@@ -31,6 +31,8 @@ class Connection:
         return connection.cursor()
 
 class Table:
+    DATATYPES = ["TEXT", "INTEGER", "BLOB", ""]
+
     def __init__(self, name, **fields) -> None:
         self.name = name
         self.fields = fields
@@ -40,9 +42,9 @@ class Table:
     def create(self):
         fields = ""
         for key, value in self.fields.items():
-            if re.match(r'^[a-zA-Z]+$', key):
-                return input_string  # String contains only letters, return it
-            else:
+            if not re.match(r'^[a-zA-Z]+$', key):
+                raise TypeError("Field name is not valid")
+            if value not in DATATYPES:                  
 
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS '%s' ()""")
 
