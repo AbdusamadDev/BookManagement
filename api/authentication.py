@@ -1,5 +1,5 @@
 from exceptions import ValidationError, DatabaseError, AuthenticationError
-from flask import Blueprint, request, jsonify, authenticate
+from flask import Blueprint, request, jsonify
 from utils import hash_pwd, generate_token
 from datetime import timedelta, datetime
 from models import Database
@@ -14,6 +14,7 @@ database = Database(
     },
 )
 database.createdb()
+
 
 @auth_route.post("/auth/users")
 def register():
@@ -42,8 +43,9 @@ def register():
         return ValidationError(description="Passwords didn't match!")
 
     try:
-
-        database.add(username=username, email=email, password=hash_pwd(password).decode())
+        database.add(
+            username=username, email=email, password=hash_pwd(password).decode()
+        )
         print("User creation")
     except Exception as body:
         print("Database error: ", body)
@@ -55,11 +57,12 @@ def register():
     return jsonify({"user": username, "token": new_token})
 
 
-@auth_route.post("/users/login")
+@auth_route.post("/auth/login")
 def login():
     data = request.get_json()
     username = data.get("username", None)
     password = data.get("password", None)
-    if username or password is None:
+    if (username is None) or (password is None):
         return AuthenticationError(description="Username or email is not provided")
-    user = 
+    user = database.get(username=username)
+    return str(user)

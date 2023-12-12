@@ -104,12 +104,10 @@ class Database:
             raise Exception("Database error: ", str(err))
 
     def get(self, **field):
-        if len(field) >= 1:
-            raise TypeError("Only one search argument can be accepted")
         self.cursor.execute(
-            f"""SELECT * FROM {self.name} WHERE {list(field.keys())[0]}={list(field.values())[0]}"""
+            f"""SELECT * FROM {self.name} WHERE {list(field.keys())[0]}='{list(field.values())[0]}'"""
         )
-        return self.cursor.fetchall()
+        return self.cursor.fetchall()[0]
 
     def commit(self):
         self.conn.commit()
