@@ -1,4 +1,4 @@
-from exceptions import ValidationError, DatabaseError
+from exceptions import ValidationError, DatabaseError, AuthenticationError
 from flask import Blueprint, request, jsonify, authenticate
 from utils import hash_pwd, generate_token
 from datetime import timedelta, datetime
@@ -61,4 +61,4 @@ def login():
     username = data.get("username", None)
     password = data.get("password", None)
     if username or password is None:
-        return 
+        return AuthenticationError(description="Username or email is not provided")
