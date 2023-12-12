@@ -4,10 +4,9 @@ from flask import Flask
 app = Flask(__name__)
 app.register_blueprint(auth_route, prefix="/auth")
 
-app.get("/test")
 
-
-def testing(request):
+@app.get("/test")
+def testing():
     return "Test"
 
 
