@@ -31,15 +31,22 @@ def generate_token(payload):
     except JWTError as jwt_error:
         return None, str(jwt_error)
 
-def verify_token(token):
+
+def decode_token(token):
     try:
         algorithm = os.environ.get("ALGORITHM")
         secret_key = os.environ.get("SECRET_KEY")
-        payload = jwt.decode
+        payload = jwt.decode(token, secret_key, algorithms=[algorithm])
+        return payload
+    except JWTError as jwt_error:
+        return None, str(jwt_error)
+
 
 if __name__ == "__main__":
     print(
-        generate_token(
-            {"user": "Abdusamad", "exp": datetime.now() + timedelta(minutes=30)}
+        decode_token(
+            generate_token(
+                payload={"msg": "hello", "exp": datetime.now() + timedelta(days=3)}
+            )
         )
     )
