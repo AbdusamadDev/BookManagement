@@ -12,6 +12,8 @@ def index():
 
 @auth_route.route("/users")
 def register():
+    return "tesisdsdfsdfsdf"
+
     # data = request.get_json()
     # # Validation process goes for valid json data
     # requirements = {
@@ -50,4 +52,3 @@ def register():
     # payload = {"username": username, "exp": datetime.now() + timedelta(days=3)}
     # new_token = generate_token(payload=payload)
     # return Response({"user": username, "token": new_token})
-    return "tesisdsdfsdfsdf"
