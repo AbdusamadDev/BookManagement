@@ -5,7 +5,15 @@ from datetime import timedelta, datetime
 from models import Database
 
 auth_route = Blueprint("authentication", __name__)
-
+database = Database(
+    "users",
+    fields={
+        "username": "TEXT NOT NULL",
+        "email": "TEXT UNIQUE NOT NULL",
+        "password": "TEXT",
+    },
+)
+database.createdb()
 
 @auth_route.post("/auth/users")
 def register():
@@ -34,16 +42,8 @@ def register():
         return ValidationError(description="Passwords didn't match!")
 
     try:
-        user = Database(
-            "users",
-            fields={
-                "username": "TEXT NOT NULL",
-                "email": "TEXT UNIQUE NOT NULL",
-                "password": "TEXT",
-            },
-        )
-        user.createdb()
-        user.add(username=username, email=email, password=hash_pwd(password).decode())
+
+        database.add(username=username, email=email, password=hash_pwd(password).decode())
         print("User creation")
     except Exception as body:
         print("Database error: ", body)

@@ -109,6 +109,7 @@ class Database:
         self.cursor.execute(
             f"""SELECT * FROM {self.name} WHERE {list(field.keys())[0]}={list(field.values())[0]}"""
         )
+        return self.cursor.fetchall()
 
     def commit(self):
         self.conn.commit()
