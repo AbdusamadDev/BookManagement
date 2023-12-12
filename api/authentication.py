@@ -1,5 +1,5 @@
 from exceptions import ValidationError, DatabaseError
-from flask import Blueprint, request, Response, jsonify
+from flask import Blueprint, request, jsonify, authenticate
 from utils import hash_pwd, generate_token
 from datetime import timedelta, datetime
 from models import Database
@@ -52,4 +52,13 @@ def register():
     payload = {"username": username, "exp": datetime.now() + timedelta(days=3)}
     new_token = generate_token(payload=payload)
     print("Success")
-    return Response(jsonify({"user": username, "token": new_token}))
+    return jsonify({"user": username, "token": new_token})
+
+
+@auth_route.post("/users/login")
+def login():
+    data = request.get_json()
+    username = data.get("username", None)
+    password = data.get("password", None)
+    if username or password is None:
+        return 
