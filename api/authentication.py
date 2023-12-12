@@ -1,5 +1,5 @@
 from exceptions import ValidationError, DatabaseError
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, jsonify
 from utils import hash_pwd, generate_token
 from datetime import timedelta, datetime
 from models import Database
@@ -11,6 +11,7 @@ auth_route = Blueprint("authentication", __name__)
 def register():
     data = request.get_json()
     # Validation process goes for valid json data
+    print("Validation is being executed")
     requirements = {
         "username": "Username was not provided",
         "email": "Email was not provided",
@@ -18,6 +19,7 @@ def register():
         "confirm_password": "Confirm of password was not passed",
     }
     for key, value in requirements.items():
+        print(key, value)
         if key not in data.keys():
             return ValidationError(description=value)
     email, username, password, confirm_password = (
@@ -40,13 +42,14 @@ def register():
                 "password": "TEXT",
             },
         )
-        user.add(username=username, email=email, password=hash_pwd(password))
+        user.createdb()
+        user.add(username=username, email=email, password=hash_pwd(password).decode())
         print("User creation")
     except Exception as body:
-        print("Database error")
+        print("Database error: ", body)
         return DatabaseError(description=str(body), status=422)
 
     payload = {"username": username, "exp": datetime.now() + timedelta(days=3)}
     new_token = generate_token(payload=payload)
     print("Success")
-    return Response(data={"user": username, "token": new_token})
+    return Response(jsonify({"user": username, "token": new_token}))
