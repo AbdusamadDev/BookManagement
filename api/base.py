@@ -9,6 +9,5 @@ app.register_blueprint(auth_route, prefix="/auth")
 def testing():
     return "Test"
 
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, use_reloader=True)
+    app.run(host="0.0.0.0", port=8000, use_reloader=True)

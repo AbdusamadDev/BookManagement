@@ -10,7 +10,7 @@ auth_route = Blueprint("auth", __name__)
 def index():
     return "This is an example app"
 
-@auth_route.route("/users")
+@auth_route.post("/users")
 def register():
     return "tesisdsdfsdfsdf"
 
