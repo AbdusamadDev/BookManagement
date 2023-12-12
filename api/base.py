@@ -1,5 +1,5 @@
-from authentication import auth_route
 from flask import Flask
+from authentication import auth_route
 
 app = Flask(__name__)
 app.register_blueprint(auth_route, prefix="/auth")
