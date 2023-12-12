@@ -5,7 +5,7 @@ from exceptions import ValidationError
 auth_route = Blueprint("auth", __name__)
 
 
-@auth_route.post("/users/new/")
+@auth_route.post("/users/")
 def register():
     data = request.get_json()
     # Validation process goes for valid json data
@@ -16,3 +16,6 @@ def register():
         if "@" not in vl_email or "." not in vl_email:
             return ValidationError(description="Invalid Email provided!")
         return ValidationError(description="Email is not provided!")
+    if "password" not in data.keys():
+        return ValidationError(description="Password must be provided!")
+    

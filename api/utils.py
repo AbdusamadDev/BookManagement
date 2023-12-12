@@ -10,12 +10,10 @@ def hash_pwd(passwd):
 
 
 def verify_pwd(passwd, hashed_pwd):
-    bytes = passwd.encode("utf-8")
-    salt = bcrypt.gensalt()
-    hash = bcrypt.hashpw(bytes, salt)
-    userBytes = hashed_pwd.encode("utf-8")
-    result = bcrypt.checkpw(hash, userBytes)
+    bytes_pwd = passwd.encode("utf-8")
+    result = bcrypt.checkpw(bytes_pwd, hashed_pwd)
     return result
+
 
 if __name__ == "__main__":
     print(verify_pwd("wassup", hash_pwd("wassup")))
