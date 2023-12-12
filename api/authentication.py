@@ -1,7 +1,8 @@
-from flask import Blueprint, request, Response
 from exceptions import ValidationError, DatabaseError
+from flask import Blueprint, request, Response
+from utils import hash_pwd, generate_token
+from datetime import timedelta, datetime
 from models import Database
-from utils import hash_pwd
 
 auth_route = Blueprint("auth", __name__)
 
@@ -43,4 +44,6 @@ def register():
     except Exception as body:
         return DatabaseError(description=str(body), status=422)
     
+    payload = {"username": username, "exp": }
+    new_token = generate_token(payload=payload)
     return Response()
