@@ -1,3 +1,4 @@
+from psycopg2.errors import SyntaxError as DBSyntaxError
 from psycopg2 import OperationalError
 from dotenv import load_dotenv
 from typing import Dict, List
@@ -72,15 +73,15 @@ class Database:
                 """CREATE TABLE IF NOT EXISTS %s (%s)""" % (self.name, fields[:-1])
             )
             self.commit()
-        except OperationalError as err:
-            raise TypeError("Database error: ", str(err))
+        except DBSyntaxError as err:
+            raise TypeError("Database error: " + str(err))
 
     def add(self, **kwargs):
         if self.name is None:
             raise TypeError("name parameter is not provided")
         keys = list(kwargs.keys())
 
-        # Performed recursion here to show more skills
+        # Performed recursion here to show broader skills
         def validate_fields(index):
             try:
                 key = keys[index]
