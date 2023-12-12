@@ -1,3 +1,5 @@
+from exceptions import ValidationError, AuthenticationError
+
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from dotenv import load_dotenv
@@ -40,6 +42,15 @@ def decode_token(token):
         return payload
     except JWTError as jwt_error:
         return None, str(jwt_error)
+
+
+def authenticate_or_abort(token):
+    decoded_payload = decode_token(token)
+    if "username" in decoded_payload.keys() and "password" in decoded_payload.keys():
+        user = 
+    return AuthenticationError(
+        description="Authentication credentials failed", status=401
+    )
 
 
 if __name__ == "__main__":
