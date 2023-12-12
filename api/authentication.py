@@ -1,6 +1,6 @@
 from exceptions import ValidationError, DatabaseError, AuthenticationError
 from flask import Blueprint, request, jsonify
-from utils import hash_pwd, generate_token
+from utils import hash_pwd, generate_token, verify_pwd
 from datetime import timedelta, datetime
 from models import Database
 
@@ -8,7 +8,7 @@ auth_route = Blueprint("authentication", __name__)
 database = Database(
     "users",
     fields={
-        "username": "TEXT NOT NULL",
+        "username": "TEXT UNIQUE NOT NULL",
         "email": "TEXT UNIQUE NOT NULL",
         "password": "TEXT",
     },
@@ -65,4 +65,4 @@ def login():
     if (username is None) or (password is None):
         return AuthenticationError(description="Username or email is not provided")
     user = database.get(username=username)
-    return str(user)
+    is_correct_passwd = verify_pwd
