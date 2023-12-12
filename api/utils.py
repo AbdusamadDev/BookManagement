@@ -14,5 +14,8 @@ def verify_pwd(passwd, hashed_pwd):
     salt = bcrypt.gensalt()
     hash = bcrypt.hashpw(bytes, salt)
     userBytes = hashed_pwd.encode("utf-8")
-    result = bcrypt.checkpw(userBytes, hash)
+    result = bcrypt.checkpw(hash, userBytes)
     return result
+
+if __name__ == "__main__":
+    print(verify_pwd("wassup", hash_pwd("wassup")))
