@@ -57,12 +57,12 @@ def register():
     return jsonify({"user": username, "token": new_token})
 
 
-@auth_route.post("/auth/login")
-def login():
-    data = request.get_json()
-    username = data.get("username", None)
-    password = data.get("password", None)
-    if (username is None) or (password is None):
-        return AuthenticationError(description="Username or email is not provided")
-    user = database.get(username=username)
-    is_correct_passwd = verify_pwd
+# @auth_route.post("/auth/login")
+# def login():
+#     data = request.get_json()
+#     username = data.get("username", None)
+#     password = data.get("password", None)
+#     if (username is None) or (password is None):
+#         return AuthenticationError(description="Username or email is not provided")
+#     user = database.get(username=username)
+#     is_correct_passwd = verify_pwd
