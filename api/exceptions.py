@@ -19,3 +19,7 @@ class ValidationError(HTTPException):
         exception_body = jsonify({"msg": self.description})
         exception_body.status = self.status
         return exception_body
+
+
+class DatabaseError(ValidationError):
+    """Custom Exception class for specifically Database related errors"""

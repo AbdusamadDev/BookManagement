@@ -2,7 +2,7 @@ from authentication import auth_route
 from flask import Flask
 
 app = Flask(__name__)
-app.register_blueprint(auth_route, )
+app.register_blueprint(auth_route, prefix="/auth")
 
 app.get("/test")
 

@@ -46,4 +46,4 @@ def register():
 
     payload = {"username": username, "exp": datetime.now() + timedelta(days=3)}
     new_token = generate_token(payload=payload)
-    return Response()
+    return Response({"user": username, "token": new_token})
