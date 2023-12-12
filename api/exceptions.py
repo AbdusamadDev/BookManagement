@@ -21,5 +21,14 @@ class ValidationError(HTTPException):
         return exception_body
 
 
-class DatabaseError(ValidationError):
+class DatabaseError(HTTPException):
     """Custom Exception class for specifically Database related errors"""
+
+    def __init__(
+        self,
+        description: str | None = None,
+        response: Response | None = None,
+        status=400,
+    ) -> None:
+        self.status = status
+        super().__init__(description, response)
