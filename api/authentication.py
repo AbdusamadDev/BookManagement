@@ -43,7 +43,7 @@ def register():
         user.add(username=username, email=email, password=hash_pwd(password))
     except Exception as body:
         return DatabaseError(description=str(body), status=422)
-    
-    payload = {"username": username, "exp": }
+
+    payload = {"username": username, "exp": datetime.now() + timedelta(days=3)}
     new_token = generate_token(payload=payload)
     return Response()
