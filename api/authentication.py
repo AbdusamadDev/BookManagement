@@ -6,8 +6,11 @@ from models import Database
 
 auth_route = Blueprint("auth", __name__)
 
+@auth_route.route('/')
+def index():
+    return "This is an example app"
 
-@auth_route.post("/users")
+@auth_route.route("/users")
 def register():
     # data = request.get_json()
     # # Validation process goes for valid json data
