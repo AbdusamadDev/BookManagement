@@ -103,6 +103,12 @@ class Database:
         except OperationalError as err:
             raise Exception("Database error: ", str(err))
 
+    def get(self, **field):
+        if len(field) >= 1:
+            raise TypeError("Only one search argument can be accepted")
+        self.cursor.execute(f"""SELECT * FROM {self.name} """)
+
+
     def commit(self):
         self.conn.commit()
 

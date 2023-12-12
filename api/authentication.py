@@ -62,3 +62,4 @@ def login():
     password = data.get("password", None)
     if username or password is None:
         return AuthenticationError(description="Username or email is not provided")
+    user = 
