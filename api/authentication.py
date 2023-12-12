@@ -9,5 +9,8 @@ auth_route = Blueprint("auth", __name__)
 def register():
     data = request.get_json()
     if "username" not in data.keys():
-        return ValidationError("Username was not provided")
-    return "success for now"
+        return ValidationError(description="Username was not provided!")
+    if "email" not in data.keys():
+        if 
+        return ValidationError(description="Email is not provided!")
+    
