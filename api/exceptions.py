@@ -1,8 +1,9 @@
 from typing import Any
+from flask import Response
 
 
-class ValidationError:
+class ValidationError(Response):
     """Custom Validation error for api"""
 
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
-        (pass)
+    
+
