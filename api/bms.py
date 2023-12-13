@@ -24,18 +24,20 @@ books.createdb()
 
 @bms_route.post("/books/create")
 def create():
+    # Authentication
     token = request.headers.get("Authorization", None)
     data = request.get_json()
     print(token)
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
-    # Now request is trusted and authenticated
+    # Fields validation
     for key in data.keys():
         if key not in books.columns:
             return ValidationError(description=f"Invalid field provided: {key}")
-    title = ""
-    page = ""
-    author = ""
+    # Fields preparation for book creation
+    title = data.get("title")
+    page = data.get("page")
+    author = autho
     source_path = ""
     publication_date = ""
     user = ""
