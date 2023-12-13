@@ -13,7 +13,7 @@ database = Database(
         "email": "TEXT UNIQUE NOT NULL",
         "password": "TEXT",
     },
-    addons="PRIMARY KEY ('id')"
+    addons="PRIMARY KEY (id)"
 )
 database.createdb()
 

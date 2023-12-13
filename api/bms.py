@@ -10,14 +10,14 @@ books = Database(
     fields={
         "id": "INTEGER",
         "title": "TEXT NOT NULL",
-        "page": "INEGER",
+        "page": "INtEGER",
         "author": "TEXT NOT NULL",
         "source_path": "TEXT NOT NULL",
         "publication_date": "TEXT",
         "date_created": "TEXT",
         "user": "INTEGER NOT NULL",
     },
-    addons="PRIMARY KEY ('id'), FOREIGN KEY ('id') REFERENCES users ('id')",
+    addons="PRIMARY KEY (id), FOREIGN KEY (id) REFERENCES users (id)",
 )
 books.createdb()
 
