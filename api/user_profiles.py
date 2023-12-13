@@ -43,6 +43,11 @@ def register():
         return ValidationError(description="Passwords didn't match!")
 
     try:
+        if database.get(username=username):
+            return ValidationError(
+                description=f"User with username: {username} already exists!",
+                status=400
+            )
         database.add(
             username=username, email=email, password=hash_pwd(password).decode()
         )
