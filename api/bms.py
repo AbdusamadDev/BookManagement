@@ -1,6 +1,6 @@
+from exceptions import AuthenticationError, ValidationError, DatabaseError
 from flask import Blueprint, request
 from authentication import is_authenticated
-from exceptions import AuthenticationError, ValidationError
 from models import Database
 from utils import decode_token
 
@@ -35,6 +35,8 @@ def create():
         username = decode_token(token).get("username")
         books.name = "users"
         user_id = books.get(username=username)
+        if user_id:
+            user_id = user_id[0]
     books.name = "books"
     # Fields validation
     for key in data.keys():
@@ -43,7 +45,19 @@ def create():
     # Fields preparation for book creation
     title = data.get("title")
     page = data.get("page")
-    author = author.get("author")
+    author = data.get("author")
     source_path = "path"
     publication_date = data.get("publication_date")
-    user = ""
+    # Book creation
+    try:
+        books.add(
+            title=title,
+            page=page,
+            author=author,
+            source_path=source_path,
+            publication_date=publication_date,
+            user=user_id,
+        )
+    except Exception as error:
+        return DatabaseError
+    # Successful response
