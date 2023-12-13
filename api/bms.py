@@ -25,7 +25,10 @@ books.createdb()
 @bms_route.post("/books/create")
 def create():
     token = request.headers.get("Authorization", None)
+    data = request.get_json()
     print(token)
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
     # Now request is trusted and authenticated
+    for key in data.keys():
+        if key not in 
