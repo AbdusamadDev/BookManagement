@@ -59,5 +59,5 @@ def create():
             user=user_id,
         )
     except Exception as error:
-        return DatabaseError
+        return DatabaseError(description=str(error), status=)
     # Successful response
