@@ -13,7 +13,7 @@ def is_authenticated(token):
         user = model.get(username=decoded_payload.get("username"))
         print("User: ", user)
         if user:
-            is_correct_passwd = verify_pwd(decoded_payload.get("password"), user[-1])
+            is_correct_passwd = verify_pwd(decoded_payload.get("password"), user[-1].encode(""))
             if not is_correct_passwd:
                 return False
             return True
