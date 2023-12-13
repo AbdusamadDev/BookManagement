@@ -3,7 +3,6 @@ from psycopg2 import OperationalError
 from dotenv import load_dotenv
 from typing import Dict, List
 import psycopg2
-import time
 import re
 import os
 
@@ -60,7 +59,7 @@ class Database:
         if self.name and fields is None:
             raise TypeError("name or fields attributes are not given")
         for key, value in self.fields.items():
-            if not re.match(r"^[a-zA-Z]+$", key):
+            if not re.match(r"^[a-zA-Z_]+$", key):
                 raise TypeError(f"Field name is not valid: {key}")
             if value.upper().split(" ")[0] not in self.DATATYPES:
                 raise TypeError(f"Datatype: {value} not valid for field: {key}")
