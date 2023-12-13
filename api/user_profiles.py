@@ -8,7 +8,7 @@ auth_route = Blueprint("authentication", __name__)
 database = Database(
     "users",
     fields={
-        "id": "INTEGER AUTO INCREMENT",
+        "id": "SERIAL",
         "username": "TEXT UNIQUE NOT NULL",
         "email": "TEXT UNIQUE NOT NULL",
         "password": "TEXT",
