@@ -7,6 +7,8 @@ bms_route = Blueprint("Book Management Service", __name__)
 
 @bms_route.post("/books/create")
 def create():
-    authenticate_or_abort(request.headers.get("token", None))
+    token = request.headers.get("token", None)
+    print(token)
+    authenticate_or_abort(to)
     # Now request is trusted and authenticated
-    pass
+    return "Authenticated successfully!"
