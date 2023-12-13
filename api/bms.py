@@ -13,4 +13,10 @@ def create():
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
     # Now request is trusted and authenticated
-    return "Authenticated successfully!"
+    # Book Title
+    # Book page amount
+    # Book author
+    # Book source (pdf)
+    # User ()
+    # date created
+

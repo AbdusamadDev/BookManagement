@@ -1,4 +1,4 @@
-from exceptions import ValidationError, DatabaseError, AuthenticationError
+from exceptions import ValidationError, DatabaseError
 from flask import Blueprint, request, jsonify
 from utils import hash_pwd, generate_token, cesar_hash
 from datetime import timedelta, datetime
@@ -48,9 +48,7 @@ def register():
                 description=f"User with username: {username} already exists!",
                 status=400,
             )
-        database.add(
-            username=username, email=email, password=new_pwd
-        )
+        database.add(username=username, email=email, password=new_pwd)
         print("User creation")
     except Exception as body:
         print("Database error: ", body)
@@ -64,7 +62,3 @@ def register():
     new_token = generate_token(payload=payload)
     print("Success")
     return jsonify({"user": username, "token": new_token})
-
-
-# @auth_route.delete("/auth/delete")
-# def delete_user()
