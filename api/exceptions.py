@@ -15,7 +15,7 @@ class ValidationError(HTTPException):
         self.status = status
         super().__init__(description, response)
 
-    def get_response(self):
+    def get_response(self, environ):
         exception_body = jsonify({"msg": self.description})
         exception_body.status = self.status
         return exception_body
@@ -33,7 +33,7 @@ class DatabaseError(HTTPException):
         self.status = status
         super().__init__(description, response)
 
-    def get_response(self):
+    def get_response(self, environ):
         exception_body = jsonify({"msg": self.description})
         exception_body.status = self.status
         return exception_body
