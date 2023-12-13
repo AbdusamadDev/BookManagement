@@ -53,6 +53,7 @@ class Database:
         )
         self.conn = self.connection.connection
         self.cursor = self.connection.cursor
+        self.addons = addons
 
     def createdb(self):
         fields = ""
@@ -68,6 +69,7 @@ class Database:
             if not isinstance(key, str) or not isinstance(value, str):
                 raise AttributeError("Fields can only be str!")
             fields += f"{key.lower()} {value.upper()},"
+            fields += " " + self.addons
         try:
             self.cursor.execute(
                 """CREATE TABLE IF NOT EXISTS %s (%s)""" % (self.name, fields[:-1])

@@ -8,11 +8,12 @@ auth_route = Blueprint("authentication", __name__)
 database = Database(
     "users",
     fields={
-        "id": "INTEGER ",
+        "id": "INTEGER",
         "username": "TEXT UNIQUE NOT NULL",
         "email": "TEXT UNIQUE NOT NULL",
         "password": "TEXT",
     },
+    addons="PRIMARY KEY ('id')"
 )
 database.createdb()
 

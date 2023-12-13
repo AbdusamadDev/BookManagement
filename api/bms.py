@@ -8,17 +8,19 @@ bms_route = Blueprint("Book Management Service", __name__)
 books = Database(
     name="books",
     fields={
-        "id": "INTEGER PRIMARY KEY ('id')",
+        "id": "INTEGER",
         "title": "TEXT NOT NULL",
         "page": "INEGER",
         "author": "TEXT NOT NULL",
         "source_path": "TEXT NOT NULL",
         "publication_date": "TEXT",
         "date_created": "TEXT",
-        "user": "INTEGER FOREIGN KEY ('id') REFERENCES users ('id') NOT NULL",
+        "user": "INTEGER NOT NULL",
     },
+    addons="PRIMARY KEY ('id') FOREIGN KEY ('id') REFERENCES users ('id')",
 )
 books.createdb()
+
 
 @bms_route.post("/books/create")
 def create():
