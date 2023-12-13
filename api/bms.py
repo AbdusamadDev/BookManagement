@@ -8,7 +8,7 @@ bms_route = Blueprint("Book Management Service", __name__)
 
 @bms_route.post("/books/create")
 def create():
-    token = request.headers.get("token", None)
+    token = request.headers.get("Authorization", None)
     print(token)
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
