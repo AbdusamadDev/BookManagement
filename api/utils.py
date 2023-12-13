@@ -45,9 +45,13 @@ def decode_token(token):
         return None, str(jwt_error)
 
 
+def cesar_hash(pwd, step, symbol):
+    
+        return ''.join([chr(ord(i) - step) for i in pwd])
 
 
 if __name__ == "__main__":
+    print(cesar_hash("salom", 5))
     print(
         decode_token(
             generate_token(

@@ -1,4 +1,3 @@
-from exceptions import AuthenticationError
 from utils import decode_token, verify_pwd
 from models import Database
 
