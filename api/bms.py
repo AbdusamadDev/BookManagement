@@ -15,9 +15,9 @@ books = Database(
         "source_path": "TEXT NOT NULL",
         "publication_date": "TEXT",
         "date_created": "TEXT",
-        "user": "INTEGER NOT NULL",
+        '"user"': "INTEGER NOT NULL",
     },
-    addons="PRIMARY KEY (id), FOREIGN KEY (user) REFERENCES users (id)",
+    addons='PRIMARY KEY (id), FOREIGN KEY ("user") REFERENCES users (id)',
 )
 books.createdb()
 
