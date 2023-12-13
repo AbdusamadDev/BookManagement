@@ -9,13 +9,13 @@ books = Database(
     name="books",
     fields={
         "id": "INTEGER PRIMARY KEY ('id')",
-        "title": "TEXT",
+        "title": "TEXT NOT NULL",
         "page": "INEGER",
-        "author": "TEXT",
-        "source_path": "TEXT",
+        "author": "TEXT NOT NULL",
+        "source_path": "TEXT NOT NULL",
         "publication_date": "TEXT",
         "date_created": "TEXT",
-        "user": "INTEGER FOREIGN KEY ('')"
+        "user": "INTEGER FOREIGN KEY ('id') REFERENCES users ('id') NOT NULL",
     },
 )
 
@@ -27,10 +27,3 @@ def create():
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
     # Now request is trusted and authenticated
-    # Book Title
-    # Book page amount
-    # Book author
-    # Book source (pdf)
-    # User (book created user)
-    # Publication date
-    # date created
