@@ -32,9 +32,10 @@ def create():
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
     else:
-        username = decode_token(token)
-        books.name = ""
-        user_id = 
+        username = decode_token(token).get("username")
+        books.name = "users"
+        user_id = books.get(username=username)
+    books.name = "books"
     # Fields validation
     for key in data.keys():
         if key not in books.columns:
