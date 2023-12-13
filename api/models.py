@@ -107,6 +107,7 @@ class Database:
         self.cursor.execute(
             f"""SELECT * FROM {self.name} WHERE {list(field.keys())[0]}='{list(field.values())[0]}'"""
         )
+        print("The fetch one thing: ", self.cursor.fetchone())
         return self.cursor.fetchone()
 
     def commit(self):
