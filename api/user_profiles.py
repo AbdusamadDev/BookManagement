@@ -46,7 +46,7 @@ def register():
         if database.get(username=username):
             return ValidationError(
                 description=f"User with username: {username} already exists!",
-                status=400
+                status=400,
             )
         database.add(
             username=username, email=email, password=hash_pwd(password).decode()
@@ -56,7 +56,12 @@ def register():
         print("Database error: ", body)
         return DatabaseError(description=str(body), status=422)
 
-    payload = {"username": username, "exp": datetime.now() + timedelta(days=3)}
+    user = database.get(username=username)
+    payload = {
+        "username": username,
+        "password": user[-1],
+        "exp": datetime.now() + timedelta(days=3),
+    }
     new_token = generate_token(payload=payload)
     print("Success")
     return jsonify({"user": username, "token": new_token})
