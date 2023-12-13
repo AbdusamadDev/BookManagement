@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from authentication import is_authenticated
-from exceptions import AuthenticationError
+from exceptions import AuthenticationError, ValidationError
 from models import Database
 
 
@@ -31,4 +31,6 @@ def create():
         return AuthenticationError(description="Not authenticated", status=401)
     # Now request is trusted and authenticated
     for key in data.keys():
-        if key not in 
+        if key not in books.columns:
+            return ValidationError(description=f"Invalid field provided: {key}")
+        try
