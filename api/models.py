@@ -40,7 +40,7 @@ class Connection:
 class Database:
     DATATYPES = ["TEXT", "INTEGER", "JSON"]
 
-    def __init__(self, name=None, fields: Dict = None) -> None:
+    def __init__(self, name=None, fields: Dict = None, addons: str = "") -> None:
         dbname = os.environ.get("DATABASE")
         user = os.environ.get("USER")
         password = os.environ.get("PASSWORD")

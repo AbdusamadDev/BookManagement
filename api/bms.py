@@ -18,7 +18,7 @@ books = Database(
         "user": "INTEGER FOREIGN KEY ('id') REFERENCES users ('id') NOT NULL",
     },
 )
-
+books.createdb()
 
 @bms_route.post("/books/create")
 def create():
