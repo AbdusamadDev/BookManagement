@@ -1,9 +1,11 @@
 from flask import Blueprint, request
 from authentication import is_authenticated
 from exceptions import AuthenticationError
+from models import D
 
 
 bms_route = Blueprint("Book Management Service", __name__)
+books = Database()
 
 
 @bms_route.post("/books/create")
@@ -18,5 +20,6 @@ def create():
     # Book author
     # Book source (pdf)
     # User (book created user)
+    # Publication date
     # date created
 
