@@ -76,6 +76,10 @@ class Database:
             )
             self.commit()
         except DBSyntaxError as err:
+            print(
+                """CREATE TABLE IF NOT EXISTS %s (%s)"""
+                % (self.name, fields[:-1] + ", " + self.addons)
+            )
             raise TypeError("Database error: " + str(err))
 
     def add(self, **kwargs):
