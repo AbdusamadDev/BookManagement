@@ -17,7 +17,7 @@ books = Database(
         "date_created": "TEXT",
         "user": "INTEGER NOT NULL",
     },
-    addons="PRIMARY KEY ('id') FOREIGN KEY ('id') REFERENCES users ('id')",
+    addons="PRIMARY KEY ('id'), FOREIGN KEY ('id') REFERENCES users ('id')",
 )
 books.createdb()
 
