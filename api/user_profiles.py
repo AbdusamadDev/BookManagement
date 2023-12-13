@@ -1,6 +1,6 @@
 from exceptions import ValidationError, DatabaseError, AuthenticationError
 from flask import Blueprint, request, jsonify
-from utils import hash_pwd, generate_token, verify_pwd
+from utils import hash_pwd, generate_token, cesar_hash
 from datetime import timedelta, datetime
 from models import Database
 
@@ -58,7 +58,7 @@ def register():
 
     payload = {
         "username": username,
-        "password": new_pwd,
+        "password": cesar_hash(password, 10, "+"),
         "exp": datetime.now() + timedelta(days=3),
     }
     new_token = generate_token(payload=payload)

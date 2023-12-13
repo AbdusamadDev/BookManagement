@@ -1,4 +1,5 @@
-from utils import decode_token, verify_pwd
+from exceptions import AuthenticationError
+from utils import decode_token, verify_pwd, cesar_hash
 from models import Database
 
 
@@ -12,7 +13,10 @@ def is_authenticated(token):
         user = model.get(username=decoded_payload.get("username"))
         print("User: ", user)
         if user:
-            is_correct_passwd = verify_pwd("2005", user[-1].encode("utf-8"))
+            is_correct_passwd = verify_pwd(
+                cesar_hash(decoded_payload.get("password"), 10, "-"),
+                user[-1].encode("utf-8"),
+            )
             print(is_correct_passwd)
             print(decoded_payload.get("password"))
             print(user[-1].encode("utf-8"))

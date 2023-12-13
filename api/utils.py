@@ -46,12 +46,15 @@ def decode_token(token):
 
 
 def cesar_hash(pwd, step, symbol):
-    
+    if symbol == "+":
+        return ''.join([chr(ord(i) + step) for i in pwd])
+    else:
         return ''.join([chr(ord(i) - step) for i in pwd])
+        
 
 
 if __name__ == "__main__":
-    print(cesar_hash("salom", 5))
+    print(cesar_hash("xfqtr", 5, "-"))
     print(
         decode_token(
             generate_token(
