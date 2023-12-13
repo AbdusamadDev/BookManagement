@@ -41,7 +41,7 @@ def register():
         return ValidationError(description="Invalid Email provided!")
     if password != confirm_password:
         return ValidationError(description="Passwords didn't match!")
-
+    new_pwd = hash_pwd(password).decode()
     try:
         if database.get(username=username):
             return ValidationError(
@@ -49,17 +49,16 @@ def register():
                 status=400,
             )
         database.add(
-            username=username, email=email, password=hash_pwd(password).decode()
+            username=username, email=email, password=new_pwd
         )
         print("User creation")
     except Exception as body:
         print("Database error: ", body)
         return DatabaseError(description=str(body), status=422)
 
-    user = database.get(username=username)
     payload = {
         "username": username,
-        "password": user[-1],
+        "password": new_pwd,
         "exp": datetime.now() + timedelta(days=3),
     }
     new_token = generate_token(payload=payload)
