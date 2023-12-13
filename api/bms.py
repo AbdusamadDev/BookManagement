@@ -33,4 +33,9 @@ def create():
     for key in data.keys():
         if key not in books.columns:
             return ValidationError(description=f"Invalid field provided: {key}")
-        try
+    title = ""
+    page = ""
+    author = ""
+    source_path = ""
+    publication_date = ""
+    user = ""
