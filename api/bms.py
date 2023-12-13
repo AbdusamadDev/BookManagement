@@ -17,6 +17,6 @@ def create():
     # Book page amount
     # Book author
     # Book source (pdf)
-    # User ()
+    # User (book created user)
     # date created
 
