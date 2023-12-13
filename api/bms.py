@@ -8,7 +8,7 @@ bms_route = Blueprint("Book Management Service", __name__)
 books = Database(
     name="books",
     fields={
-        "id": "INTEGER",
+        "id": "INTEGER AUTO INCREMENT",
         "title": "TEXT NOT NULL",
         "page": "INtEGER",
         "author": "TEXT NOT NULL",
