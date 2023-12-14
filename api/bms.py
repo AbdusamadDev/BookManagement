@@ -49,6 +49,7 @@ def create():
     source_path = "path"
     publication_date = data.get("publication_date")
     # Book creation
+    print(user_id)
     try:
         books.add(
             title=title,
