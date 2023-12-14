@@ -28,7 +28,7 @@ class DatabaseError(HTTPException):
         self,
         description: str | None = None,
         response: Response | None = None,
-        status=400,
+        status=422,
     ) -> None:
         self.status = status
         super().__init__(description, response)
