@@ -1,5 +1,5 @@
 from exceptions import AuthenticationError, ValidationError, DatabaseError
-from flask import Blueprint, request
+from flask import Blueprint, request, Response
 from authentication import is_authenticated
 from models import Database
 from utils import decode_token
@@ -61,4 +61,4 @@ def create():
     except Exception as error:
         return DatabaseError(description=str(error))
     # Successful response
-    return 
+    return Response(data, status=201)
