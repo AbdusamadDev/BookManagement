@@ -70,7 +70,7 @@ def create():
         books.add(
             title=title,
             page=page,
-            user=user_id,
+            user=g.user_id,
             author=author,
             source_path=str(source_path),
             publication_date=publication_date,
