@@ -26,6 +26,15 @@ books.createdb()
 
 @bms_route.before_request
 def authentication_middleware():
+    token = request.headers.get("Authorization", None)
+    if not is_authenticated(token):
+        return AuthenticationError(description="Not authenticated", status=401)
+    username = decode_token(token).get("username")
+    books.name = "users"
+    user_id = books.get(username=username)
+    if user_id:
+        user_id = user_id[0]
+        g.user_id = user_id
 
 
 # CREATE
@@ -36,15 +45,7 @@ def create():
         data = request.get_json()
     else:
         data = request.form
-    token = request.headers.get("Authorization", None)
-    if not is_authenticated(token):
-        return AuthenticationError(description="Not authenticated", status=401)
-    else:
-        username = decode_token(token).get("username")
-        books.name = "users"
-        user_id = books.get(username=username)
-        if user_id:
-            user_id = user_id[0]
+
     books.name = "books"
     # Fields validation
     for key, value in data.items():
