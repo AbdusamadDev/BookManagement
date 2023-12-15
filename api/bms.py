@@ -56,7 +56,7 @@ def create():
     source_path = request.files.get("source")
     publication_date = data.get("publication_date")
     print(os.getcwd())
-    print(os.path.abspath())
+    print(os.path.abspath(__name__))
     # Book creation
     try:
         books.add(
