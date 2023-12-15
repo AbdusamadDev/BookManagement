@@ -1,5 +1,5 @@
 from exceptions import AuthenticationError, ValidationError, DatabaseError
-from flask import Blueprint, request, make_response, g, send_from_directory
+from flask import Blueprint, request, make_response, g, send_file
 from authentication import is_authenticated
 from models import Database
 from utils import decode_token
@@ -37,9 +37,13 @@ def authentication_middleware():
         user_id = user_id[0]
         g.user_id = user_id
 
-@bms_route.get("/uploads/<fiename>")
-def uploads(filename):
-    return send_from_directory()
+
+@bms_route.get("/uploads/<filename>")
+def uploads(filename: str):
+    return send_file(
+        os.path.join(os.path.abspath(__name__)[:-3], "uploads", filename)
+    )
+
 
 # CREATE
 @bms_route.route("/books/create", methods=["POST"])
@@ -92,4 +96,3 @@ def get(book_id: int):
     if len(book) == 0:
         return {}
     return {books.columns[i]: book[i] for i in range(len(book))}
-
