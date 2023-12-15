@@ -42,7 +42,7 @@ def decode_token(token):
         payload = jwt.decode(token, secret_key, algorithms=[algorithm])
         return payload
     except JWTError as jwt_error:
-        return None, str(jwt_error)
+        return {}
 
 
 def cesar_hash(pwd, step, symbol):
