@@ -40,9 +40,12 @@ def authentication_middleware():
 
 @bms_route.get("/uploads/<filename>")
 def uploads(filename: str):
-    return send_file(
-        os.path.join(os.path.abspath(__name__)[:-3], "uploads", filename)
-    )
+    try:
+        return send_file(
+            os.path.join(os.path.abspath(__name__)[:-3], "uploads", filename)
+        )
+    except FileNotFoundError:
+        return make_response({"msg": "File not found!"}, 404)
 
 
 # CREATE
