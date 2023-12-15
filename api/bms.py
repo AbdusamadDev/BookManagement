@@ -50,7 +50,7 @@ def create():
     books.name = "books"
     # Fields validation
     data_keys = data.keys()
-    for column in books.columns:    
+    for column in ["title", "author", "page"]:    
         if column in data_keys:
             if data.get(column) is None:
                 return ValidationError(f"Field: {column} cannot be blank or null")
@@ -61,13 +61,15 @@ def create():
     title = data.get("title")
     page = data.get("page")
     author = data.get("author")
-    source = request.files.get("source")
+    source = request.files.get("source", None)
     publication_date = data.get("publication_date")
     source_path = os.path.join(
         str(os.path.abspath(__name__))[:-3], "uploads", source.filename
     )
     try:
-        # Check book format
+        # Check book format and existence
+        if source is None:
+            return ValidationError("The books source is not provided")
         if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
             return ValidationError("Only pdf and html files are allowed as a book")
         # Book creation
