@@ -54,36 +54,27 @@ def create():
         if field not in keys:
             return ValidationError(f"Field {field} is not provided")
         else:
+            if data.get(field) is None:
+                return ValidationError(f"Field: {field} cannot be null or blank")
             collected_data[field] = data[field]
+    print(collected_data)
 
-    # Fields preparation for book creation
-    title = data.get("title")
-    page = data.get("page")
-    author = data.get("author")
-    source = request.files.get("source", None)
-    publication_date = data.get("publication_date")
-    source_path = os.path.join(
-        str(os.path.abspath(__name__))[:-3], "uploads", source.filename
-    )
-    try:
-        # Check book format and existence
-        # if source is None:
-        #     return ValidationError("The books source is not provided")
-        # if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
-        #     return ValidationError("Only pdf and html files are allowed as a book")
-        # Book creation
-        books.add(
-            title=title,
-            page=page,
-            user=g.user_id,
-            author=author,
-            source_path=str(source_path),
-            publication_date=publication_date,
-            date_created=str(datetime.now()),
-        )
-        source.save(source_path)
-    except Exception as error:
-        return DatabaseError(description=str(error))
+    # # Fields preparation for book creation
+    # source = request.files.get("source", None)
+    # publication_date = data.get("publication_date")
+    # source_path = os.path.join(
+    #     str(os.path.abspath(__name__))[:-3], "uploads", source.filename
+    # )
+    # try:
+    #     # Book creation
+    #     books.add(
+    #         source_path=str(source_path),
+    #         date_created=str(datetime.now()),
+    #         **collected_data
+    #     )
+    #     source.save(source_path)
+    # except Exception as error:
+    #     return DatabaseError(description=str(error))
     # Successful response
     return make_response(dict(data), 201)
 
