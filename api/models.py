@@ -102,6 +102,7 @@ class Database:
         values = str(list(kwargs.values()))[1:-1]
         if self.name == "books":
             print("Books-------------------------")
+            print(values)
             print(fields)
             split_fields = fields.split("user")
             print(split_fields)
