@@ -49,7 +49,8 @@ def create():
     books.name = "books"
     # Fields validation
     for key, value in data.items():
-        if value is None:
+        if (value is None) or (not value):
+            print("Value is being none")
             return ValidationError(f"This field can't be blank or null: {key}")
         if key not in books.columns:
             return ValidationError(description=f"Invalid field provided: {key}")
@@ -62,25 +63,23 @@ def create():
     source_path = os.path.join(
         str(os.path.abspath(__name__))[:-3], "uploads", source.filename
     )
-    try:
+    # try:
         # Check book format
-        if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
-            return ValidationError("Only pdf and html files are allowed as a book")
-        # Book creation
-        print("User in GGGGGGG: ", g.user_id)
-        print("\n")
-        books.add(
-            title=title,
-            page=page,
-            user=g.user_id,
-            author=author,
-            source_path=str(source_path),
-            publication_date=publication_date,
-            date_created=str(datetime.now()),
-        )
-        source.save(source_path)
-    except Exception as error:
-        return DatabaseError(description=str(error))
+    if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
+        return ValidationError("Only pdf and html files are allowed as a book")
+    # Book creation
+    books.add(
+        title=title,
+        page=page,
+        user=g.user_id,
+        author=author,
+        source_path=str(source_path),
+        publication_date=publication_date,
+        date_created=str(datetime.now()),
+    )
+    source.save(source_path)
+    # except Exception as error:
+    #     return DatabaseError(description=str(error))
     # Successful response
     return make_response(dict(data), 201)
 
