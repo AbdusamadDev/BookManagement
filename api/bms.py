@@ -49,15 +49,8 @@ def create():
     books.name = "books"
     # Fields validation
     data_fields = data.items()
-    for key, value in data_fields:
-        print(value)
-        if (value is None) or (not value):
-            print("Value is being none")
-            return ValidationError(f"This field can't be blank or null: {key}")
-        if key not in books.columns:
-            print("Key not being in columns")
-            return ValidationError(description=f"Invalid field provided: {key}")
-        
+    for column in books.columns:
+        if 
     # Fields preparation for book creation
     title = data.get("title")
     page = data.get("page")
@@ -67,23 +60,23 @@ def create():
     source_path = os.path.join(
         str(os.path.abspath(__name__))[:-3], "uploads", source.filename
     )
-    # try:
+    try:
         # Check book format
-    if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
-        return ValidationError("Only pdf and html files are allowed as a book")
-    # Book creation
-    books.add(
-        title=title,
-        page=page,
-        user=g.user_id,
-        author=author,
-        source_path=str(source_path),
-        publication_date=publication_date,
-        date_created=str(datetime.now()),
-    )
-    source.save(source_path)
-    # except Exception as error:
-    #     return DatabaseError(description=str(error))
+        if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
+            return ValidationError("Only pdf and html files are allowed as a book")
+        # Book creation
+        books.add(
+            title=title,
+            page=page,
+            user=g.user_id,
+            author=author,
+            source_path=str(source_path),
+            publication_date=publication_date,
+            date_created=str(datetime.now()),
+        )
+        source.save(source_path)
+    except Exception as error:
+        return DatabaseError(description=str(error))
     # Successful response
     return make_response(dict(data), 201)
 
