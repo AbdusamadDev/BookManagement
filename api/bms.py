@@ -53,22 +53,24 @@ def create():
     title = data.get("title")
     page = data.get("page")
     author = data.get("author")
-    source_path = request.files.get("source")
+    source = request.files.get("source")
     publication_date = data.get("publication_date")
-    print(os.getcwd())
-    print(os.path.abspath(__name__))
+    source_path = os.path.join(
+        str(os.path.abspath(__name__))[:-3], "uploads", source.filename
+    )
     # Book creation
     try:
+        print(source_path)
         books.add(
             title=title,
             page=page,
             author=author,
-            source_path=source_path.name,
+            source_path=source_path,
             publication_date=publication_date,
             user=user_id,
             date_created=str(datetime.now()),
         )
-        # source_path.save()
+        source.save(source_path)
     except Exception as error:
         return DatabaseError(description=str(error))
     # Successful response
