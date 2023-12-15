@@ -47,15 +47,14 @@ def create():
     else:
         data = request.form
 
+    collected_data = {}
     books.name = "books"
-    # Fields validation
-    # data_keys = data.keys()
-    # for column in ["title", "author", "page"]:
-    #     if column in data_keys:
-    #         if data.get(column) is None:
-    #             return ValidationError(f"Field: {column} cannot be blank or null")
-    #     else:
-    #         return ValidationError(f"This field is required: {column}")
+    keys = data.keys()
+    for field in books.columns:
+        if field not in keys:
+            return ValidationError(f"Field {field} is not provided")
+        else:
+            collected_data[field] = data[field]
 
     # Fields preparation for book creation
     title = data.get("title")
