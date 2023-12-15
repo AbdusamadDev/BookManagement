@@ -86,7 +86,6 @@ class Database:
             raise TypeError("name parameter is not provided")
         keys = list(kwargs.keys())
 
-        # Performed recursion here to show broader skills
         def validate_fields(index):
             try:
                 key = keys[index]
@@ -98,8 +97,11 @@ class Database:
             return validate_fields(index + 1)
 
         validate_fields(0)
-        fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
-        values = str(list(kwargs.values()))[1:-1]
+
+        # Construct SQL query
+        fields = ", ".join(keys)
+        values = ", ".join(f"'{value}'" for value in kwargs.values())
+
         try:
             self.cursor.execute(
                 f'''INSERT INTO {self.name} ({fields}) VALUES ({values})'''
@@ -107,6 +109,7 @@ class Database:
             self.commit()
         except OperationalError as err:
             raise Exception("Database error: ", str(err))
+
 
     def get(self, **field):
         self.cursor.execute(
