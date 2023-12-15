@@ -50,10 +50,7 @@ def create():
     books.name = "books"
     # Fields validation
     data_keys = data.keys()
-    columns = books.columns
-    columns.remove("id")
-    columns.remove("user")
-    for column in c:
+    for column in books.columns:    
         if column in data_keys:
             if data.get(column) is None:
                 return ValidationError(f"Field: {column} cannot be blank or null")
