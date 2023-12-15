@@ -77,3 +77,8 @@ def create():
         return DatabaseError(description=str(error))
     # Successful response
     return make_response(dict(data), 201)
+
+
+@bms_route.patch("/books/update/<id>")
+def partial_update(id: int)
+
