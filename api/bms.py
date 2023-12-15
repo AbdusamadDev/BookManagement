@@ -67,6 +67,8 @@ def create():
         if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
             return ValidationError("Only pdf and html files are allowed as a book")
         # Book creation
+        print("User in GGGGGGG: ", g.user_id)
+        print("\n")
         books.add(
             title=title,
             page=page,
