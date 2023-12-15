@@ -55,6 +55,8 @@ def create():
     author = data.get("author")
     source_path = request.files.get("source")
     publication_date = data.get("publication_date")
+    print(os.getcwd())
+    print(os.path.abspath())
     # Book creation
     try:
         books.add(
@@ -66,7 +68,7 @@ def create():
             user=user_id,
             date_created=str(datetime.now()),
         )
-        source_path.save()
+        # source_path.save()
     except Exception as error:
         return DatabaseError(description=str(error))
     # Successful response
