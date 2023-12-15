@@ -80,7 +80,6 @@ class Database:
                 % (self.name, fields[:-1] + ", " + self.addons)
             )
             raise TypeError("Database error: " + str(err))
-
     def add(self, **kwargs):
         if self.name is None:
             raise TypeError("name parameter is not provided")
@@ -100,15 +99,18 @@ class Database:
 
         # Construct SQL query
         fields = ", ".join(keys)
-        values = ", ".join(f"'{value}'" for value in kwargs.values())
+        values = ", ".join(f"%({key})s" for key in keys)
 
         try:
             self.cursor.execute(
-                f'''INSERT INTO {self.name} ({fields}) VALUES ({values})'''
+                f'''INSERT INTO {self.name} ({fields}) VALUES ({values})''',
+                kwargs
             )
             self.commit()
         except OperationalError as err:
             raise Exception("Database error: ", str(err))
+
+
 
 
     def get(self, **field):

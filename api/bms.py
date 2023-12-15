@@ -59,6 +59,7 @@ def create():
         publication_date=publication_date,
         user=user_id,
     )
+
     # except Exception as error:
     #     return DatabaseError(description=str(error))
     # Successful response
