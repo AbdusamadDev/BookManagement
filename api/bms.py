@@ -84,13 +84,6 @@ def create():
 
 @bms_route.patch("/books/update/<id>")
 def partial_update(id: int):
-    # Authentication
-    token = request.headers.get("Authorization", None)
-    if not is_authenticated(token):
-        return AuthenticationError(description="Not authenticated", status=401)
-    else:
-        username = decode_token(token).get("username")
-        books.name = "users"
-        user_id = books.get(username=username)
-        if user_id:
-            user_id = user_id[0]
+    
+    pass
+
