@@ -46,18 +46,20 @@ def create():
         data = request.get_json()
     else:
         data = request.form
-
     collected_data = {}
     books.name = "books"
     requirements = ["title", "page", "author", "publication_date"]
     keys = data.keys()
-    for field in :
+    for field in requirements:
         if field not in keys:
             return ValidationError(f"Field {field} is not provided")
         else:
             if data.get(field) is None:
                 return ValidationError(f"Field: {field} cannot be null or blank")
             collected_data[field] = data[field]
+    source = request.files.get("source", None)
+    if source is None:
+        return ValidationError("Book source is not provided: source")
     print(collected_data)
 
     # # Fields preparation for book creation
