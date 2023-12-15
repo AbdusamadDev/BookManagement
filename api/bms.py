@@ -67,8 +67,8 @@ def create():
         author=author,
         source_path=str(source_path),
         publication_date=publication_date,
-        user=user_id,
         date_created=str(datetime.now()),
+        user=user_id,
     )
     source.save(source_path)
     # except Exception as error:

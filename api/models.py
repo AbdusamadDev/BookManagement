@@ -98,6 +98,7 @@ class Database:
             return validate_fields(index + 1)
 
         validate_fields(0)
+        print("Fields: ", str(list(kwargs.keys()))[1:-1])
         fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
         values = str(list(kwargs.values()))[1:-1]
         if self.name == "books":
