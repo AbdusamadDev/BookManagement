@@ -49,13 +49,13 @@ def create():
 
     books.name = "books"
     # Fields validation
-    data_keys = data.keys()
-    for column in ["title", "author", "page"]:    
-        if column in data_keys:
-            if data.get(column) is None:
-                return ValidationError(f"Field: {column} cannot be blank or null")
-        else:
-            return ValidationError(f"This field is required: {column}")
+    # data_keys = data.keys()
+    # for column in ["title", "author", "page"]:
+    #     if column in data_keys:
+    #         if data.get(column) is None:
+    #             return ValidationError(f"Field: {column} cannot be blank or null")
+    #     else:
+    #         return ValidationError(f"This field is required: {column}")
 
     # Fields preparation for book creation
     title = data.get("title")
@@ -68,10 +68,10 @@ def create():
     )
     try:
         # Check book format and existence
-        if source is None:
-            return ValidationError("The books source is not provided")
-        if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
-            return ValidationError("Only pdf and html files are allowed as a book")
+        # if source is None:
+        #     return ValidationError("The books source is not provided")
+        # if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
+        #     return ValidationError("Only pdf and html files are allowed as a book")
         # Book creation
         books.add(
             title=title,
