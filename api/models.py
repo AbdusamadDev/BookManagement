@@ -112,6 +112,8 @@ class Database:
         )
         return self.cursor.fetchone()
 
+        
+
     def commit(self):
         self.conn.commit()
 

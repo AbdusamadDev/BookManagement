@@ -82,7 +82,7 @@ def create():
     return make_response(dict(data), 201)
 
 
-@bms_route.patch("/books/update/<book_id>")
-def partial_update(book_id: int):
-    book = books.get(title="New book")
-    return str(book)
+@bms_route.delete("/books/delete/<book_id>")
+def delete(book_id: int):
+    books.name = "books"
+        
