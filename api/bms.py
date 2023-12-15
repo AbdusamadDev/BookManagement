@@ -61,11 +61,12 @@ def create():
             title=title,
             page=page,
             author=author,
-            source_path=source_path,
+            source_path=source_path.name,
             publication_date=publication_date,
             user=user_id,
             date_created=str(datetime.now()),
         )
+        source_path.save()
     except Exception as error:
         return DatabaseError(description=str(error))
     # Successful response
