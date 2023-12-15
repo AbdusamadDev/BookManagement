@@ -102,7 +102,7 @@ class Database:
         values = str(list(kwargs.values()))[1:-1]
         try:
             self.cursor.execute(
-                f"""INSERT INTO {self.name} ({fields}) VALUES ({values})"""
+                f'''INSERT INTO {self.name} ({fields}) VALUES ({values})'''
             )
             self.commit()
         except OperationalError as err:
