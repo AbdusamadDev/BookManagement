@@ -41,7 +41,7 @@ def authentication_middleware():
 # CREATE
 @bms_route.route("/books/create", methods=["POST"])
 def create():
-    # Authentication
+    # Validation
     if request.is_json:
         data = request.get_json()
     else:
@@ -54,7 +54,7 @@ def create():
         if field not in keys:
             return ValidationError(f"Field {field} is not provided")
         else:
-            if data.get(field) is None or data.get(field) == '':
+            if data.get(field) is None or data.get(field) == "":
                 return ValidationError(f"Field: {field} cannot be null or blank")
             collected_data[field] = data[field]
     source = request.files.get("source", None)
@@ -63,13 +63,17 @@ def create():
     source_path = os.path.join(
         str(os.path.abspath(__name__))[:-3], "uploads", source.filename
     )
+    if source is None:
+        return ValidationError("The books source is not provided")
+    if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
+        return ValidationError("Only pdf and html files are allowed as a book")
     try:
         # Book creation
         books.add(
             user=g.user_id,
             source_path=str(source_path),
             date_created=str(datetime.now()),
-            **collected_data
+            **collected_data,
         )
         source.save(source_path)
     except Exception as error:
