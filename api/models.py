@@ -101,7 +101,11 @@ class Database:
         fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
         values = str(list(kwargs.values()))[1:-1]
         if self.name == "books":
-            fields.split("user")
+            print("Books-----------")
+            split_fields = fields.split("user")
+            print(split_fields[0])
+            print(split_fields[1])
+            fields = split_fields[0] + ' "user" ' + split_fields[-1]
         try:
             self.cursor.execute(
                 f'''INSERT INTO {self.name} ({fields}) VALUES ({values})'''
