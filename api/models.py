@@ -82,7 +82,7 @@ class Database:
             raise TypeError("name parameter is not provided")
         keys = list(kwargs.keys())
 
-        # Performed recursion here to show broader skills
+        # Performed recursion here to show broader skills :)
         def validate_fields(index):
             try:
                 key = keys[index]

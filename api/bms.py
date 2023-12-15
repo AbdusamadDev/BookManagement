@@ -1,5 +1,5 @@
 from exceptions import AuthenticationError, ValidationError, DatabaseError
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, jsonify
 from authentication import is_authenticated
 from models import Database
 from utils import decode_token
@@ -75,5 +75,5 @@ def create():
     except Exception as error:
         return DatabaseError(description=str(error))
     # Successful response
-    print(data)
-    return Response(data, status=201)
+    print("FIelds: ", data)
+    return sonify({"dict(data):": "qweqwe"}), sta
