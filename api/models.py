@@ -80,11 +80,13 @@ class Database:
                 % (self.name, fields[:-1] + ", " + self.addons)
             )
             raise TypeError("Database error: " + str(err))
+
     def add(self, **kwargs):
         if self.name is None:
             raise TypeError("name parameter is not provided")
         keys = list(kwargs.keys())
 
+        # Performed recursion here to show broader skills
         def validate_fields(index):
             try:
                 key = keys[index]
@@ -96,22 +98,17 @@ class Database:
             return validate_fields(index + 1)
 
         validate_fields(0)
-
-        # Construct SQL query
-        fields = ", ".join(keys)
-        values = ", ".join(f"%({key})s" for key in keys)
-
+        fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
+        values = str(list(kwargs.values()))[1:-1]
+        if self.name == "books":
+            fields.split("user")
         try:
             self.cursor.execute(
-                f'''INSERT INTO {self.name} ({fields}) VALUES ({values})''',
-                kwargs
+                f'''INSERT INTO {self.name} ({fields}) VALUES ({values})'''
             )
             self.commit()
         except OperationalError as err:
             raise Exception("Database error: ", str(err))
-
-
-
 
     def get(self, **field):
         self.cursor.execute(
