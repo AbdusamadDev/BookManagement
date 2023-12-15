@@ -24,6 +24,7 @@ books = Database(
 )
 books.createdb()
 
+
 @bms_route.before_request
 def authentication_middleware():
     token = request.headers.get("Authorization", None)
@@ -48,9 +49,14 @@ def create():
 
     books.name = "books"
     # Fields validation
-    data_fields = data.items()
+    data_keys = data.keys()
     for column in books.columns:
-        if 
+        if column in data_keys:
+            if data.get(column) is None:
+                return ValidationError(f"Field: {column} cannot be blank or null")
+        else:
+            return ValidationError(f"This field is required: {column}")
+
     # Fields preparation for book creation
     title = data.get("title")
     page = data.get("page")
@@ -93,4 +99,3 @@ def partial_update(id: int):
         user_id = books.get(username=username)
         if user_id:
             user_id = user_id[0]
-
