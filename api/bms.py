@@ -58,6 +58,7 @@ def create():
         source_path=source_path,
         publication_date=publication_date,
         user=user_id,
+        date_created=s(datetime.now())
     )
 
     # except Exception as error:
