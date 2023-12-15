@@ -103,7 +103,7 @@ class Database:
         values = str(list(kwargs.values()))[1:-1]
         if self.name == "books":
             split_fields = fields.split("user")
-            fields = split_fields[0] + ' "user" '
+            fields = split_fields[0] + ' "user" ' + split_fields[-1]
         try:
             query = f"""INSERT INTO {self.name} ({fields}) VALUES ({values})"""
             print(query)
