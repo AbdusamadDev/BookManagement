@@ -48,7 +48,8 @@ def create():
 
     books.name = "books"
     # Fields validation
-    for key, value in data.items():
+    data_fields = data.items()
+    for key, value in data_fields:
         print(value)
         if (value is None) or (not value):
             print("Value is being none")
@@ -56,6 +57,7 @@ def create():
         if key not in books.columns:
             print("Key not being in columns")
             return ValidationError(description=f"Invalid field provided: {key}")
+        
     # Fields preparation for book creation
     title = data.get("title")
     page = data.get("page")
