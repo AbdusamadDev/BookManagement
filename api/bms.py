@@ -25,7 +25,7 @@ books = Database(
 books.createdb()
 
 
-@bms_route.post("/books/create")
+@bms_route.route("/books/create", methods=["POST"])
 def create():
     # Authentication
     token = request.headers.get("Authorization", None)

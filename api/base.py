@@ -3,6 +3,7 @@ from user_profiles import auth_route
 from bms import bms_route
 
 app = Flask(__name__)
+app.config['JSONIFY_MIMETYPE'] = 'mu'
 app.register_blueprint(auth_route)
 app.register_blueprint(bms_route)
 
