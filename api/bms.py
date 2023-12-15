@@ -76,3 +76,4 @@ def create():
         return DatabaseError(description=str(error))
     # Successful response
     return make_response(dict(data), 201)
+
