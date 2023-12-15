@@ -1,5 +1,5 @@
 from exceptions import AuthenticationError, ValidationError, DatabaseError
-from flask import Blueprint, request, make_response
+from flask import Blueprint, request, make_response, g
 from authentication import is_authenticated
 from models import Database
 from utils import decode_token
@@ -23,6 +23,9 @@ books = Database(
     addons='PRIMARY KEY (id), FOREIGN KEY ("user") REFERENCES users (id)',
 )
 books.createdb()
+
+@bms_route.before_request
+def authentication_middleware():
 
 
 # CREATE
@@ -81,6 +84,7 @@ def create():
 
 @bms_route.patch("/books/update/<id>")
 def partial_update(id: int):
+    # Authentication
     token = request.headers.get("Authorization", None)
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
