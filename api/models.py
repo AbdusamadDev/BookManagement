@@ -106,7 +106,7 @@ class Database:
             print(fields)
             split_fields = fields.split("user")
             print(split_fields)
-            fields = split_fields[0] + ' "user" ' + split_fields[-1]
+            fields = split_fields[0] + ' "user" '
             print("Construction: ", fields)
         try:
             self.cursor.execute(
