@@ -59,19 +59,19 @@ def create():
         str(os.path.abspath(__name__))[:-3], "uploads", source.filename
     )
     # Book creation
-    try:
-        print(source_path)
-        books.add(
-            title=title,
-            page=page,
-            author=author,
-            source_path=source_path,
-            publication_date=publication_date,
-            user=user_id,
-            date_created=str(datetime.now()),
-        )
-        source.save(source_path)
-    except Exception as error:
-        return DatabaseError(description=str(error))
+    # try:
+    print(source_path)
+    books.add(
+        title=title,
+        page=page,
+        author=author,
+        source_path=str(source_path),
+        publication_date=publication_date,
+        user=user_id,
+        date_created=str(datetime.now()),
+    )
+    source.save(source_path)
+    # except Exception as error:
+    #     return DatabaseError(description=str(error))
     # Successful response
     return Response(data, status=201)
