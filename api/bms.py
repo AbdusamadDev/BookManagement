@@ -49,8 +49,9 @@ def create():
 
     collected_data = {}
     books.name = "books"
+    requirements = ["title", "page", "author", "publication_date"]
     keys = data.keys()
-    for field in books.columns:
+    for field in :
         if field not in keys:
             return ValidationError(f"Field {field} is not provided")
         else:
