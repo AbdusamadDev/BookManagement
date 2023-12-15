@@ -3,6 +3,7 @@ from flask import Blueprint, request, Response
 from authentication import is_authenticated
 from models import Database
 from utils import decode_token
+from 
 
 
 bms_route = Blueprint("Book Management Service", __name__)
@@ -58,7 +59,7 @@ def create():
         source_path=source_path,
         publication_date=publication_date,
         user=user_id,
-        date_created=s(datetime.now())
+        date_created=str(datetime.now())
     )
 
     # except Exception as error:
