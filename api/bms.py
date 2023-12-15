@@ -99,3 +99,5 @@ def get(book_id: int):
     if len(book) == 0:
         return {}
     return {books.columns[i]: book[i] for i in range(len(book))}
+
+# @bms_route.delete("/books/delete/<>")
