@@ -28,10 +28,12 @@ books.createdb()
 @bms_route.route("/books/create", methods=["POST"])
 def create():
     # Authentication
-    token = request.headers.get("Authorization", None)
-    if request.get_data():
+    if request.is_json:
+        data = request.get_json()
+    else:
         data = request.form
         print("Form: ", dict(data))
+    token = request.headers.get("Authorization", None)
     data = request.get_json()
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
