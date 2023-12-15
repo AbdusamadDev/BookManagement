@@ -71,7 +71,7 @@ def create():
         # Book creation
         books.add(
             user=g.user_id,
-            source_path=str(source_path),
+            source_path=str(source_path.replace("\\", "/")),
             date_created=str(datetime.now()),
             **collected_data,
         )
@@ -83,9 +83,10 @@ def create():
 
 
 @bms_route.get("/books/<book_id>")
-def delete(book_id: int):
+def get(book_id: int):
     books.name = "books"
     book = books.get(id=book_id)
-    
-    return {}
+    if len(book) == 0:
+        return {}
+    return {books.columns[i]: book[i] for i in range(len(book))}
 
