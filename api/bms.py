@@ -1,5 +1,5 @@
 from exceptions import AuthenticationError, ValidationError, DatabaseError
-from flask import Blueprint, request, make_response, g
+from flask import Blueprint, request, make_response, g, send_from_directory
 from authentication import is_authenticated
 from models import Database
 from utils import decode_token
@@ -37,6 +37,9 @@ def authentication_middleware():
         user_id = user_id[0]
         g.user_id = user_id
 
+@bms_route.get("/uploads/<fiename>")
+def uploads(filename):
+    return send_from_directory()
 
 # CREATE
 @bms_route.route("/books/create", methods=["POST"])
@@ -71,7 +74,7 @@ def create():
         # Book creation
         books.add(
             user=g.user_id,
-            source_path=str(source_path.replace("\\", "/")),
+            source_path=f"/uploads/{source.filename}",
             date_created=str(datetime.now()),
             **collected_data,
         )
