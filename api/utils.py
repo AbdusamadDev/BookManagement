@@ -41,7 +41,7 @@ def decode_token(token):
         secret_key = os.environ.get("SECRET_KEY")
         payload = jwt.decode(token, secret_key, algorithms=[algorithm])
         return payload
-    except JWTError as jwt_error:
+    except JWTError:
         return {}
 
 
