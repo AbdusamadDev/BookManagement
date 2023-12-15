@@ -34,7 +34,6 @@ def create():
         data = request.form
         print("Form: ", dict(data))
     token = request.headers.get("Authorization", None)
-    data = request.get_json()
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
     else:
