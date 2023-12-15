@@ -104,9 +104,9 @@ class Database:
             split_fields = fields.split("user")
             fields = split_fields[0] + ' "user" '
         try:
-            self.cursor.execute(
-                f'''INSERT INTO {self.name} ({fields}) VALUES ({values})'''
-            )
+            query = f"""INSERT INTO {self.name} ({fields}) VALUES ({values})"""
+            print(query)
+            self.cursor.execute(query)
             self.commit()
         except OperationalError as err:
             raise Exception("Database error: ", str(err))
