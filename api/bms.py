@@ -25,6 +25,7 @@ books = Database(
 books.createdb()
 
 
+# CREATE
 @bms_route.route("/books/create", methods=["POST"])
 def create():
     # Authentication
@@ -76,4 +77,3 @@ def create():
         return DatabaseError(description=str(error))
     # Successful response
     return make_response(dict(data), 201)
-
