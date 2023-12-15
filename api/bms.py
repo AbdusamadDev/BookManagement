@@ -54,30 +54,26 @@ def create():
         if field not in keys:
             return ValidationError(f"Field {field} is not provided")
         else:
-            if data.get(field) is None:
+            if data.get(field) is None or data.get(field) == '':
                 return ValidationError(f"Field: {field} cannot be null or blank")
             collected_data[field] = data[field]
     source = request.files.get("source", None)
     if source is None:
         return ValidationError("Book source is not provided: source")
-    print(collected_data)
-
-    # # Fields preparation for book creation
-    # source = request.files.get("source", None)
-    # publication_date = data.get("publication_date")
-    # source_path = os.path.join(
-    #     str(os.path.abspath(__name__))[:-3], "uploads", source.filename
-    # )
-    # try:
-    #     # Book creation
-    #     books.add(
-    #         source_path=str(source_path),
-    #         date_created=str(datetime.now()),
-    #         **collected_data
-    #     )
-    #     source.save(source_path)
-    # except Exception as error:
-    #     return DatabaseError(description=str(error))
+    source_path = os.path.join(
+        str(os.path.abspath(__name__))[:-3], "uploads", source.filename
+    )
+    try:
+        # Book creation
+        books.add(
+            user=g.user_id,
+            source_path=str(source_path),
+            date_created=str(datetime.now()),
+            **collected_data
+        )
+        source.save(source_path)
+    except Exception as error:
+        return DatabaseError(description=str(error))
     # Successful response
     return make_response(dict(data), 201)
 
