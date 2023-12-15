@@ -84,6 +84,5 @@ def create():
 
 @bms_route.patch("/books/update/<id>")
 def partial_update(id: int):
-    
-    pass
-
+    book_id = books.get(id=id)
+    return str(book_id)
