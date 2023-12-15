@@ -82,7 +82,10 @@ def create():
     return make_response(dict(data), 201)
 
 
-@bms_route.delete("/books/delete/<book_id>")
+@bms_route.get("/books/<book_id>")
 def delete(book_id: int):
     books.name = "books"
-        
+    book = books.get(id=book_id)
+    
+    return {}
+

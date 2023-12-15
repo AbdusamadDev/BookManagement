@@ -112,7 +112,11 @@ class Database:
         )
         return self.cursor.fetchone()
 
-        
+    def delete(self, pk):
+        self.cursor.execute(
+            """DELETE FROM %s WHERE id=%s""" % (self.name, pk),
+        )
+        self.commit()
 
     def commit(self):
         self.conn.commit()
