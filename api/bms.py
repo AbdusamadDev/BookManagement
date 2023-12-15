@@ -49,10 +49,12 @@ def create():
     books.name = "books"
     # Fields validation
     for key, value in data.items():
+        print(value)
         if (value is None) or (not value):
             print("Value is being none")
             return ValidationError(f"This field can't be blank or null: {key}")
         if key not in books.columns:
+            print("Key not being in columns")
             return ValidationError(description=f"Invalid field provided: {key}")
     # Fields preparation for book creation
     title = data.get("title")
