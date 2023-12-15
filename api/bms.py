@@ -48,11 +48,15 @@ def create():
         if key not in books.columns:
             return ValidationError(description=f"Invalid field provided: {key}")
     # Fields preparation for book creation
-    title = data.get("title")
-    page = data.get("page")
-    author = data.get("author")
-    source_path = "path"
-    publication_date = data.get("publication_date")
+    title = data.get("title", None)
+    page = data.get("page", None)
+    author = data.get("author", None)
+    source_path = request.files.get("source", None)
+    publication_date = data.get("publication_date", "")
+    for i in data.keys():
+        if i is None:
+            return ValidationError(f"This field is required: {i}")
+
     # Book creation
     try:
         books.add(
