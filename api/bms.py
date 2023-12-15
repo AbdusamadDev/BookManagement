@@ -32,7 +32,6 @@ def create():
         data = request.get_json()
     else:
         data = request.form
-        print("Form: ", dict(data))
     token = request.headers.get("Authorization", None)
     if not is_authenticated(token):
         return AuthenticationError(description="Not authenticated", status=401)
@@ -58,9 +57,11 @@ def create():
     source_path = os.path.join(
         str(os.path.abspath(__name__))[:-3], "uploads", source.filename
     )
-    # Book creation
     try:
-        # ch
+        # Check book format
+        if not (source.filename.endswith(".pdf") or source.filename.endswith(".html")):
+            return ValidationError("Only pdf and html files are allowed as a book")
+        # Book creation
         books.add(
             title=title,
             page=page,
@@ -74,4 +75,5 @@ def create():
     except Exception as error:
         return DatabaseError(description=str(error))
     # Successful response
+    print(data)
     return Response(data, status=201)

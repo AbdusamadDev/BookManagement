@@ -75,10 +75,6 @@ class Database:
             )
             self.commit()
         except DBSyntaxError as err:
-            print(
-                """CREATE TABLE IF NOT EXISTS %s (%s)"""
-                % (self.name, fields[:-1] + ", " + self.addons)
-            )
             raise TypeError("Database error: " + str(err))
 
     def add(self, **kwargs):
@@ -98,7 +94,6 @@ class Database:
             return validate_fields(index + 1)
 
         validate_fields(0)
-        print("Fields: ", str(list(kwargs.keys()))[1:-1])
         fields = str(list(kwargs.keys()))[1:-1].replace('"', "").replace("'", "")
         values = str(list(kwargs.values()))[1:-1]
         if self.name == "books":
@@ -106,7 +101,6 @@ class Database:
             fields = split_fields[0] + ' "user" ' + split_fields[-1]
         try:
             query = f"""INSERT INTO {self.name} ({fields}) VALUES ({values})"""
-            print(query)
             self.cursor.execute(query)
             self.commit()
         except OperationalError as err:
